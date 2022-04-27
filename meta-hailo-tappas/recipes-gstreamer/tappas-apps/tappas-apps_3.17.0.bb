@@ -4,7 +4,7 @@ DESCRIPTION = "TAPPAS ARM applications recipe, including GStreamer based detecti
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
 SRC_URI_append = " https://hailo-tappas.s3.eu-west-2.amazonaws.com/v${PV_PARSED}/arm/hefs/yolov5m_yuv.hef;md5sum=41eeee848844f65634d0873188b08ce1"
-SRCREV = "820d3158c26f189ba72a8d8cfa5475418e5309d4"
+SRCREV = "ba1f6a8dd02bfc245ddab953609b0610983aad0c"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
