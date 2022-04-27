@@ -8,7 +8,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "820d3158c26f189ba72a8d8cfa5475418e5309d4"
+SRCREV = "ba1f6a8dd02bfc245ddab953609b0610983aad0c"
 
 inherit meson pkgconfig
 
