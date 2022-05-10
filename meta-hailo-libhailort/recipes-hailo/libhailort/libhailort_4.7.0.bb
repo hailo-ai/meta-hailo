@@ -14,7 +14,7 @@ inherit hailort-base
 OECMAKE_TARGET_COMPILE = "libhailort"
 HAILORT_INCLUDE_STAGING_DIR = "${D}${includedir}/hailort"
 
-do_install_append() {
+do_install:append() {
   install -d ${D}${libdir}
   install -m 0755 ${LIB_SRC_DIR}/libhailort.so.${PV} ${D}${libdir}
   
@@ -22,5 +22,5 @@ do_install_append() {
   cp -r ${S}/hailort/libhailort/include/* ${HAILORT_INCLUDE_STAGING_DIR}/
 }
 
-FILES_${PN} += "${libdir}/libhailort.so.${PV}"
-FILES_${PN}-dev += "${includedir}/hailort ${includedir}/hailort/*"
+FILES:${PN} += "${libdir}/libhailort.so.${PV}"
+FILES:${PN}-dev += "${includedir}/hailort ${includedir}/hailort/*"

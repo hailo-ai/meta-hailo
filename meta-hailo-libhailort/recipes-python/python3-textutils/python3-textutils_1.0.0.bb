@@ -33,4 +33,4 @@ PACKAGECONFIG[cov] = ",,,python-coveralls python-flake8 python-mypy python-pytes
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
-RDEPENDS_${PN} += "python-core"
+RDEPENDS:${PN} += "python-core"

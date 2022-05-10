@@ -40,6 +40,6 @@ PACKAGECONFIG[license] = ",,,python-editdistance"
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
-RDEPENDS_${PN} += "${PYTHON_PN}-core ${PYTHON_PN}-io ${PYTHON_PN}-shell"
+RDEPENDS:${PN} += "${PYTHON_PN}-core ${PYTHON_PN}-io ${PYTHON_PN}-shell"
 
 

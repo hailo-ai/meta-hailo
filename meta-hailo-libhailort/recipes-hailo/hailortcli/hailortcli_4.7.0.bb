@@ -12,12 +12,12 @@ S = "${WORKDIR}/git"
 
 inherit hailort-base
 
-RDEPENDS_${PN} += "libhailort"
+RDEPENDS:${PN} += "libhailort"
 OECMAKE_TARGET_COMPILE = "hailortcli"
 
-do_install_append() {
+do_install:append() {
   install -d ${D}${bindir}
   install -m 0755 ${BIN_SRC_DIR}/hailortcli ${D}${bindir}
 }
 
-FILES_${PN} += "${bindir}/hailortcli"
+FILES:${PN} += "${bindir}/hailortcli"

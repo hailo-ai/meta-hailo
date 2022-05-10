@@ -1,7 +1,7 @@
 inherit setuptools3
 require python-argcomplete.inc
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
     ${PYTHON_PN}-argparse \
     ${PYTHON_PN}-contextlib \
 "

@@ -7,7 +7,7 @@ PR = "r0"
  
 DEPENDS = "zeromq"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/python-pyzmq:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/python-pyzmq:"
 
 SRC_URI += "file://club-rpath-out.patch"
 SRC_URI[md5sum] = "ecf13c72fbea05ba5ddc771295409d48"
@@ -15,11 +15,11 @@ SRC_URI[sha256sum] = "8eddc033e716f8c91c6a2112f0a8ebc5e00532b4a6ae1eb0ccc48e027f
 
 inherit pypi pkgconfig
 
-RDEPENDS_${PN} += "${PYTHON_PN}-multiprocessing"
+RDEPENDS:${PN} += "${PYTHON_PN}-multiprocessing"
 
-FILES_${PN}-dbg =+ "${PYTHON_SITEPACKAGES_DIR}/zmq/backend/cython/.debug"
+FILES:${PN}-dbg =+ "${PYTHON_SITEPACKAGES_DIR}/zmq/backend/cython/.debug"
 
-do_compile_prepend() {
+do_compile:prepend() {
     echo [global] > ${S}/setup.cfg
     echo zmq_prefix = ${STAGING_DIR_HOST} >> ${S}/setup.cfg
     echo have_sys_un_h = True >> ${S}/setup.cfg

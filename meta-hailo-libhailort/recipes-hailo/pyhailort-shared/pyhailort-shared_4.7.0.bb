@@ -15,9 +15,9 @@ inherit hailort-base python3native
 
 # pyhailort build depends on protobuf, git, python3 and pybind11
 DEPENDS = "protobuf python3 git-native python3-pybind11"
-RDEPENDS_${PN} += "libhailort"
+RDEPENDS:${PN} += "libhailort"
 
 LIB_SRC_DIR = "${TMPDIR}/staging/lib/"
-EXTRA_OECMAKE_append = "-DHAILO_BUILD_PYBIND=1 \
+EXTRA_OECMAKE:append = "-DHAILO_BUILD_PYBIND=1 \
                         -DPYBIND11_PYTHON_VERSION=${PYTHON_BASEVERSION}"
 OECMAKE_TARGET_COMPILE = "_pyhailort"

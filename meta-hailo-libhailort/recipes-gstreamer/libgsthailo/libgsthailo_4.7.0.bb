@@ -1,4 +1,4 @@
-DESCRIPTION = "gsthailo GStreamer plugin \
+DESCRIPTION = "gsthailo gstreamer plugin \
                compiles the hailo gstreamer plugin including hailonet \
                the output of the compilation (libgsthailo.so) is copied to the target's rootfs under usr/lib/gstreamer-1.0 (gstreamer's plugins directory)"
 
@@ -15,9 +15,9 @@ S = "${WORKDIR}/git"
 inherit hailort-base
 # recipe is dependent on libhailort shared object file
 DEPENDS = "glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base glib-2.0-native"
-RDEPENDS_${PN} += "libhailort"
+RDEPENDS:${PN} += "libhailort"
 
-EXTRA_OECMAKE_append = "-DHAILO_BUILD_GSTREAMER=1"
+EXTRA_OECMAKE:append = "-DHAILO_BUILD_GSTREAMER=1"
 OECMAKE_TARGET_COMPILE = "gsthailo"
 
 GST_HAILO_SOURCES_DIR = "${S}/hailort/libhailort/bindings/gstreamer/gst-hailo"
@@ -33,5 +33,5 @@ do_install() {
     find . -type f -name \*.hpp -exec install -D {} ${GST_HAILO_INCLUDE_STAGING_DIR}/{} \;
 }
 
-FILES_${PN} += "${libdir}/gstreamer-1.0/libgsthailo.so"
-FILES_${PN}-dev += "${includedir}/gst-hailo ${includedir}/gst-hailo/*"
+FILES:${PN} += "${libdir}/gstreamer-1.0/libgsthailo.so"
+FILES:${PN}-dev += "${includedir}/gst-hailo ${includedir}/gst-hailo/*"

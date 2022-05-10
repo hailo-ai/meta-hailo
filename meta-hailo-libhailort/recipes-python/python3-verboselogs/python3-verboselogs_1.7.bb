@@ -19,7 +19,7 @@ inherit setuptools3
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
-RDEPENDS_${PN} += "${PYTHON_PN}-core ${PYTHON_PN}-logging ${PYTHON_PN}-math ${PYTHON_PN}-unittest"
+RDEPENDS:${PN} += "${PYTHON_PN}-core ${PYTHON_PN}-logging ${PYTHON_PN}-math ${PYTHON_PN}-unittest"
 
 # WARNING: We were unable to map the following python package/module
 # dependencies to the bitbake packages which include them:

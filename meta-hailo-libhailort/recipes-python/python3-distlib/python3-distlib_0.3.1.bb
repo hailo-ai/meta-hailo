@@ -29,7 +29,7 @@ inherit distutils3
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
-RDEPENDS_${PN} += "python3-compile python3-compression python3-contextlib2 python3-core python3-crypt python3-datetime python3-distutils python3-email python3-html python3-io python3-lang python3-netclient python3-netserver python3-pkgutil python3-shell python3-textutils python3-unixadmin python3-xmlrpc"
+RDEPENDS:${PN} += "python3-compile python3-compression python3-contextlib2 python3-core python3-crypt python3-datetime python3-distutils python3-email python3-html python3-io python3-lang python3-netclient python3-netserver python3-pkgutil python3-shell python3-textutils python3-unixadmin python3-xmlrpc"
 
 # WARNING: We were unable to map the following python3 package/module
 # dependencies to the bitbake packages which include them:

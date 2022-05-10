@@ -32,7 +32,7 @@ inherit setuptools3
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
-RDEPENDS_${PN} += "${PYTHON_PN}-2to3 ${PYTHON_PN}-audio ${PYTHON_PN}-codecs ${PYTHON_PN}-compression ${PYTHON_PN}-contextlib2 ${PYTHON_PN}-core ${PYTHON_PN}-crypt ${PYTHON_PN}-ctypes ${PYTHON_PN}-datetime ${PYTHON_PN}-db ${PYTHON_PN}-distutils ${PYTHON_PN}-doctest ${PYTHON_PN}-email ${PYTHON_PN}-gdbm ${PYTHON_PN}-html ${PYTHON_PN}-image ${PYTHON_PN}-io  ${PYTHON_PN}-math ${PYTHON_PN}-mime ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-netclient ${PYTHON_PN}-netserver ${PYTHON_PN}-numbers ${PYTHON_PN}-pickle ${PYTHON_PN}-pprint ${PYTHON_PN}-pydoc ${PYTHON_PN}-shell ${PYTHON_PN}-tests ${PYTHON_PN}-unittest ${PYTHON_PN}-unixadmin ${PYTHON_PN}-xml"
+RDEPENDS:${PN} += "${PYTHON_PN}-2to3 ${PYTHON_PN}-audio ${PYTHON_PN}-codecs ${PYTHON_PN}-compression ${PYTHON_PN}-contextlib2 ${PYTHON_PN}-core ${PYTHON_PN}-crypt ${PYTHON_PN}-ctypes ${PYTHON_PN}-datetime ${PYTHON_PN}-db ${PYTHON_PN}-distutils ${PYTHON_PN}-doctest ${PYTHON_PN}-email ${PYTHON_PN}-gdbm ${PYTHON_PN}-html ${PYTHON_PN}-image ${PYTHON_PN}-io  ${PYTHON_PN}-math ${PYTHON_PN}-mime ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-netclient ${PYTHON_PN}-netserver ${PYTHON_PN}-numbers ${PYTHON_PN}-pickle ${PYTHON_PN}-pprint ${PYTHON_PN}-pydoc ${PYTHON_PN}-shell ${PYTHON_PN}-tests ${PYTHON_PN}-unittest ${PYTHON_PN}-unixadmin ${PYTHON_PN}-xml"
 
 # WARNING: We were unable to map the following python package/module
 # dependencies to the bitbake packages which include them:

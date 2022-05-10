@@ -21,11 +21,11 @@ SRC_URI[sha256sum] = "382b30416d95b0a5e8502b214810dcac2a56432917e2651447d3abe253
 
 S = "${WORKDIR}/CppHeaderParser-${PV}"
 
-do_install_prepend() {
+do_install:prepend() {
     rm -rf ${S}/CppHeaderParser/examples
 }
 
-do_install_append () {
+do_install:append () {
     # remove all module examples path
     rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/CppHeaderParser/examples
     rm -rf ${PKGD}${libdir}/${PYTHON_DIR}/site-packages/CppHeaderParser/examples
@@ -38,7 +38,7 @@ inherit setuptools3
 
 # WARNING: the following rdepends are from setuptools install_requires. These
 # upstream names may not correspond exactly to bitbake package names.
-RDEPENDS_${PN} += " ${PYTHON_PN}-ply python3"
+RDEPENDS:${PN} += " ${PYTHON_PN}-ply python3"
 
 # WARNING: the following rdepends are determined through basic analysis of the
 # python sources, and might not be 100% accurate.
