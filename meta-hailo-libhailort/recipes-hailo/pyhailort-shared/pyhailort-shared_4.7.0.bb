@@ -21,12 +21,3 @@ LIB_SRC_DIR = "${TMPDIR}/staging/lib/"
 EXTRA_OECMAKE_append = "-DHAILO_BUILD_PYBIND=1 \
                         -DPYBIND11_PYTHON_VERSION=${PYTHON_BASEVERSION}"
 OECMAKE_TARGET_COMPILE = "_pyhailort"
-
-do_compile_prepend () {
-    bberror "Pyhailort is not supported at the moment for Hardknott"
-}
-
-# Skip cmake do_install process - overrides cmake bbclass
-cmake_do_install() {
-	:
-}
