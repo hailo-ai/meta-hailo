@@ -1,6 +1,4 @@
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/arm/hefs/yolov5m_yuv.hef -> apps/gstreamer/imx/detection -> 41eeee848844f65634d0873188b08ce1
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/x86/media/faces_120_120.mp4 -> apps/gstreamer/imx/facial_landmarks -> 4d5d513ddb87b220754e0cbc7e08e7f1
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/x86/hefs/tddfa_mobilenet_v1.hef -> apps/gstreamer/imx/facial_landmarks -> 66256abf6b7a485b459b5cdd7a23cc0c
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/arm/hefs/yolov5m_vehicles_no_ddr_yuy2.hef -> apps/gstreamer/imx/license_plate_recognition -> 64a6d26d172f671c2bfd2aa2d1840389
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/arm/hefs/joined_tiny_yolov4_license_plates_lprnet_yuy2.hef -> apps/gstreamer/imx/license_plate_recognition -> f73e45fee94fc7d787d86d98ce9359ed
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.18/arm/media/lpr.raw -> apps/gstreamer/imx/license_plate_recognition -> 5f2217b90b4bb4e405f7323038840786
