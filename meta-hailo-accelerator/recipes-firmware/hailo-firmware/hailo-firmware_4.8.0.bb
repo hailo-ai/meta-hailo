@@ -1,4 +1,4 @@
-DESCRIPTION = "hailo firmware 4.6.0 \
+DESCRIPTION = "hailo firmware 4.8.0 \
 				hailo8 chip firmware (hailo_fw.bin) \
 				the recipe copies the file to /lib/firmware/hailo/ on the target device’s root file system"
 
@@ -6,11 +6,11 @@ BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo8/${PV}/FW"
 FW = "hailo8_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=31691172df112c601ca27ce5ab65123d \
-		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=50002f36313cb35a2157720f4bb5192b"
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=91c88b72fd0cc16c77174628d3ea2151 \
+		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=50002f36313cb35a2157720f4bb5192b"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
 FW_PATH = "${WORKDIR}/hailo8_fw.${PV}.bin"
 
