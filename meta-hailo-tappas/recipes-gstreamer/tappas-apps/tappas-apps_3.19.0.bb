@@ -3,11 +3,11 @@ DESCRIPTION = "TAPPAS ARM applications recipe, \
               the apps hefs and media urls are taken from files/download_reqs.txt"
 
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git/core/hailo/gstreamer"
 
-SRCREV = "92a8b0137e5f76d235d5e3927342ad8741a4c108"
+SRCREV = "c93db8ebf2963ce820015a88f325373a171bd794"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -22,6 +22,9 @@ RDEPENDS_${PN} += " bash libgsthailotools"
 ARM_APPS_DIR = "${WORKDIR}/git/apps/gstreamer/imx"
 LPR_APP_NAME = "license_plate_recognition"
 
+OPENCV_UTIL = "libhailo_cv_singleton.so"
+GST_IMAGES_UTIL = "libhailo_gst_image.so"
+
 ROOTFS_APPS_DIR = "${D}/home/root/apps"
 
 REQS_FILE = "${FILE_DIRNAME}/files/download_reqs.txt"
@@ -33,7 +36,7 @@ EXTRA_OEMESON += " \
         -Dapps_install_dir='/home/root/apps' \
 		-Dlibcxxopts='${STAGING_INCDIR}/cxxopts' \
         "
-addtask install_requirements before do_populate_sysroot after do_install
+addtask install_requirements after do_install before do_package
 
 do_fetch[prefuncs] += "do_set_requirements_src_uris"
 do_unpack[prefuncs] += "do_set_requirements_src_uris"
@@ -52,12 +55,17 @@ fakeroot install_app_dir() {
     install -m 0755 ${WORKDIR}/${CURRENT_REQ_FILE} ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources
     # copy the app shell script into the app path
     install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
+    if [ -d "${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs" ]; then
+	    install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+	    install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/*.json ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+    fi 
 }
 
 do_install_append() {
     # Meson installs shared objects in apps target,
     # we remove it from the rootfs to prevent duplication with libgsthailotools
-    rm -rf ${D}/usr
+    rm -rf ${D}/usr/lib/libgsthailometa*
+    rm -rf ${D}/usr/lib/libhailo_tracker*
 }
 
 python do_set_requirements_src_uris() {
@@ -91,7 +99,8 @@ fakeroot python do_install_requirements() {
             bb.build.exec_func('install_app_dir', d)
 }
 
-FILES_${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/*"
+FILES_${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
+FILES_${PN}-lib += "/usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
 RDEPENDS_${PN}-staticdev = ""
 RDEPENDS_${PN}-dev = ""
 RDEPENDS_${PN}-dbg = ""
