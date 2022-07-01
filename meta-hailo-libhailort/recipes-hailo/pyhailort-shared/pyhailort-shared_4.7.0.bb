@@ -3,10 +3,10 @@ DESCRIPTION = "pyhailort-shared - hailo’s python shared object for running inf
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=330ab01bc49485a65979d8c28daee4b0"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=82a4bdb4814fa0e0e16f3eb0a75192d2"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "dd37bf9936429e4cc51225ca116eaf8d84441fd7"
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=develop"
+SRCREV = "6aba2a23e509da3311694d5a7eab5c690335790c"
 
 S = "${WORKDIR}/git"
 
@@ -21,12 +21,3 @@ LIB_SRC_DIR = "${TMPDIR}/staging/lib/"
 EXTRA_OECMAKE_append = "-DHAILO_BUILD_PYBIND=1 \
                         -DPYBIND11_PYTHON_VERSION=${PYTHON_BASEVERSION}"
 OECMAKE_TARGET_COMPILE = "_pyhailort"
-
-do_compile_prepend () {
-    bberror "Pyhailort is not supported at the moment for Hardknott"
-}
-
-# Skip cmake do_install process - overrides cmake bbclass
-cmake_do_install() {
-	:
-}
