@@ -7,7 +7,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "ee3eb1e9b11edcfffc33c088d09fe17d32842390"
+SRCREV = "e75a0767d53410b89914e8dc6a4a654cd0bda83f"
 
 S = "${WORKDIR}/git/linux/pcie"
 
