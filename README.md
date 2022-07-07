@@ -1,5 +1,5 @@
 <p align="left">
-  <img src=".logo.svg" />
+  <img src=".meta_hailo.jpeg" />
 </p>
 
 
@@ -22,7 +22,7 @@ Please follow the recommended setup procedures of your OE distribution.
 ### Supported branches
 
 We follow the branching naming convention described at https://wiki.yoctoproject.org/wiki/Yocto_Project_Branch_Conventions. \
-The only branches that are currently supported are: Zeus, Dunfell, Gatesgarth, Hardknott.
+The only branches that are currently supported are: Zeus, Dunfell, Gatesgarth, Hardknott, Honister.
 
 ## Usage
 
