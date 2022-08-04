@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
-SRCREV = "92a8b0137e5f76d235d5e3927342ad8741a4c108"
+SRCREV = "a450932c36412945ecc2647a1d3f8817818f2831"
 
 inherit hailotools-base
 
@@ -14,9 +14,15 @@ inherit hailotools-base
 TAPPAS_BUILD_TARGET = "libs"
 ROOTFS_POST_PROCESSES_DIR = "${libdir}/hailo-post-processes"
 
+# add dependencies
+DEPENDS += "cxxopts rapidjson"
+
+
 # meson configuration
 EXTRA_OEMESON += " \
         -Dpost_processes_install_dir='${ROOTFS_POST_PROCESSES_DIR}' \
+        -Dlibcxxopts='${STAGING_INCDIR}/cxxopts' \
+        -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
         "
 
 FILES_${PN} += "${libdir}/* ${ROOTFS_POST_PROCESSES_DIR}/* ${ROOTFS_POST_PROCESSES_DIR}/so.* \

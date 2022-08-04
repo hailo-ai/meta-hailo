@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
-SRCREV = "92a8b0137e5f76d235d5e3927342ad8741a4c108"
+SRCREV = "a450932c36412945ecc2647a1d3f8817818f2831"
 
 inherit hailotools-base
 
@@ -17,13 +17,16 @@ do_install_append() {
 }
 
 
-DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base"
+DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base rapidjson"
+EXTRA_OEMESON += " \
+    -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
+    "
 
 # libgsthailotools requires opencv, xtensor, xtl, and libgsthailo to compile and run
 TAPPAS_BUILD_TARGET = "plugins"
 
-FILES_${PN} += "/usr/lib/gstreamer-1.0/libgsthailotools.so  /usr/lib/libgsthailometa.so.${PV}"
-FILES_${PN}-lib += "/usr/lib/libgsthailometa.so.${PV} /usr/lib/gstreamer-1.0/libgsthailotools.so"
+FILES_${PN} += "/usr/lib/gstreamer-1.0/libgsthailotools.so  /usr/lib/libgsthailometa.so.${PV} /usr/lib/libhailo_tracker.so.${PV}"
+FILES_${PN}-lib += "/usr/lib/libgsthailometa.so.${PV} /usr/lib/libhailo_tracker.so.${PV} /usr/lib/gstreamer-1.0/libgsthailotools.so"
 RDEPENDS_${PN}-staticdev = ""
 RDEPENDS_${PN}-dev = ""
 RDEPENDS_${PN}-dbg = ""
