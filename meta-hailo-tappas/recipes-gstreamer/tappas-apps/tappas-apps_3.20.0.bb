@@ -3,11 +3,11 @@ DESCRIPTION = "TAPPAS ARM applications recipe, \
               the apps hefs and media urls are taken from files/download_reqs.txt"
 
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
 
 S = "${WORKDIR}/git/core/hailo/gstreamer"
 
-SRCREV = "05533dc55d1720b9b23dd19f659bf03a1d072417"
+SRCREV = "a450932c36412945ecc2647a1d3f8817818f2831"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -16,7 +16,7 @@ inherit hailotools-base
 # Setting meson build target as 'apps'
 TAPPAS_BUILD_TARGET = "apps"
 
-DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts"
+DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
 RDEPENDS_${PN} += " bash libgsthailotools"
 
 ARM_APPS_DIR = "${WORKDIR}/git/apps/gstreamer/imx"
@@ -35,6 +35,7 @@ CURRENT_REQ_FILE = ""
 EXTRA_OEMESON += " \
         -Dapps_install_dir='/home/root/apps' \
 		-Dlibcxxopts='${STAGING_INCDIR}/cxxopts' \
+        -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
         "
 addtask install_requirements after do_install before do_package
 
