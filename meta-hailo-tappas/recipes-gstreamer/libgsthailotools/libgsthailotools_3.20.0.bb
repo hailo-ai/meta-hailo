@@ -5,8 +5,8 @@ DESCRIPTION = "gsthailotools GStreamer plugin \
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "05533dc55d1720b9b23dd19f659bf03a1d072417"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
+SRCREV = "a450932c36412945ecc2647a1d3f8817818f2831"
 
 inherit hailotools-base
 
@@ -17,7 +17,10 @@ do_install_append() {
 }
 
 
-DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base"
+DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base rapidjson"
+EXTRA_OEMESON += " \
+    -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
+    "
 
 # libgsthailotools requires opencv, xtensor, xtl, and libgsthailo to compile and run
 TAPPAS_BUILD_TARGET = "plugins"
