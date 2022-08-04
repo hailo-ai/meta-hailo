@@ -19,7 +19,7 @@ EXTRA_OEMESON += " \
         -Dlibxtensor='${STAGING_INCDIR}/xtensor' \
         -Dinclude_blas=false \
         -Dtarget='${TAPPAS_BUILD_TARGET}' \
-        -Dtarget_platform='arm' \
+        -Dtarget_platform='imx' \
         -Dcpp_std='c++17' \
         --buildtype='${TAPPAS_BUILD_TYPE}' \
         "
