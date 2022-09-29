@@ -17,8 +17,8 @@ DEPENDS = "python3 pyhailort-shared python3-wheel-native"
 inherit setuptools3
 
 RDEPENDS:${PN} += "libhailort python3-future python3-importlib-metadata python3-netifaces \
-				   python3-appdirs python3-configparser python3-contextlib2 python3-netaddr \
-				   python3-argcomplete python3-verboselogs python3-numpy python3-setuptools"
+                   python3-appdirs python3-contextlib2 python3-netaddr \
+                   python3-argcomplete python3-verboselogs python3-numpy python3-setuptools"
 
 PACKAGE_NAME = "hailo_platform"
 

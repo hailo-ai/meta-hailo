@@ -1,6 +1,7 @@
 DESCRIPTION = "hailortcli - command line utility wrapper for libhailort operations, including inference \
                fw controls, measurments and more."
 
+
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
                     file://hailort/LICENSE-3RD-PARTY.md;md5=92bc69276de2a738ff7c2f8513f6116f"
