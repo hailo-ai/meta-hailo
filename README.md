@@ -1,5 +1,5 @@
 <p align="left">
-  <img src=".meta_hailo.jpeg" />
+  <img src=".meta_hailo.png" />
 </p>
 
 
@@ -24,9 +24,10 @@ Please follow the recommended setup procedures of your OE distribution.
 We follow the branching naming convention described at https://wiki.yoctoproject.org/wiki/Yocto_Project_Branch_Conventions. \
 The only branches that are currently supported are: Zeus, Dunfell, Hardknott, Honister, Kirkstone.
 
-## Usage
+## Documentation
 
-See [**hailo.ai developer zone documentation**](https://hailo.ai/developer-zone/documentation/hailort/latest/) (registration is required for  full documentation access).
+- For integrating HailoRT to your existing environment - see [**hailo.ai developer zone documentation**](https://hailo.ai/developer-zone/documentation/hailort/latest?sp_referrer=yocto/yocto.html#integrating-to-an-existing-yocto-environment) (registration is required for  full documentation access).
+- For integrating TAPPAS to your existing environment - see the documentation in the [**TAPPAS GitHub**](https://github.com/hailo-ai/tappas/blob/master/docs/installation/yocto.rst).
 
 ## Changelog
 
@@ -46,4 +47,3 @@ The Hailo-8 AI processor is designed to fit into a multitude of smart machines a
 Retail and Smart Homes.
 
 For more information, please visit [**hailo.ai**](https://hailo.ai/).
-
