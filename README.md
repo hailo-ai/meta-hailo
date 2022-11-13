@@ -1,5 +1,5 @@
 <p align="left">
-  <img src=".logo.svg" />
+  <img src=".meta_hailo.jpeg" />
 </p>
 
 
