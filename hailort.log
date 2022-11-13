@@ -1,0 +1,4 @@
+[2022-11-13 15:45:45.252] [HailoRT] [info] [hailort_driver.cpp:174] [HailoRTDriver] Hailo PCIe driver version 4.12.0
+[2022-11-13 15:45:45.252] [HailoRT] [info] [device.cpp:43] [Device] OS Version: Linux 5.15.0-52-generic #58~20.04.1-Ubuntu SMP Thu Oct 13 13:09:46 UTC 2022 x86_64
+[2022-11-13 15:45:45.253] [HailoRT] [info] [control.cpp:86] [control__parse_identify_results] firmware_version is: 4.12.0
+[2022-11-13 15:45:45.253] [HailoRT] [info] [control.cpp:86] [control__parse_identify_results] firmware_version is: 4.12.0
