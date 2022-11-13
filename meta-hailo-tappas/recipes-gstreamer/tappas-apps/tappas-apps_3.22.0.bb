@@ -1,15 +1,15 @@
 DESCRIPTION = "TAPPAS ARM applications recipe, \
-			  the recipe copies the app script, hef files and media to /home/root/apps \
-              the apps hefs and media urls are taken from files/download_reqs.txt"
+               the recipe copies the app script, hef files and media to /home/root/apps \
+               the apps hefs and media urls are taken from files/download_reqs.txt"
 
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
 
-S = "${WORKDIR}/git/core/hailo/gstreamer"
+S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "3d5a2abf3fb6a0425c6d253a6a1608d68b65abed"
+SRCREV = "febf9d8da5ea69b2eae71322fcb5a6516d1440f4"
 LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
+LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 inherit hailotools-base
 
@@ -19,7 +19,6 @@ TAPPAS_BUILD_TARGET = "apps"
 DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
 RDEPENDS_${PN} += " bash libgsthailotools"
 
-ARM_APPS_DIR = "${WORKDIR}/git/apps/gstreamer/imx"
 LPR_APP_NAME = "license_plate_recognition"
 
 OPENCV_UTIL = "libhailo_cv_singleton.so"
@@ -27,14 +26,26 @@ GST_IMAGES_UTIL = "libhailo_gst_image.so"
 
 ROOTFS_APPS_DIR = "${D}/home/root/apps"
 
-REQS_FILE = "${FILE_DIRNAME}/files/download_reqs.txt"
+GSTREAMER_APPS_DIR = "${WORKDIR}/git/apps/gstreamer/"
+IMX8_DIR = "${GSTREAMER_APPS_DIR}/imx8/"
+IMX6_DIR = "${GSTREAMER_APPS_DIR}/imx6/"
+
+REQS_PATH = "${FILE_DIRNAME}/files/"
+REQS_IMX6_FILE = "${REQS_PATH}download_reqs_imx6.txt"
+REQS_IMX8_FILE = "${REQS_PATH}download_reqs_imx8.txt"
+
+REQS_FILE = "${@ d.getVar('REQS_IMX6_FILE') if 'imx6' in d.getVar('MACHINE') else d.getVar('REQS_IMX8_FILE')}"
+ARM_APPS_DIR = "${@ d.getVar('IMX6_DIR') if 'imx6' in d.getVar('MACHINE') else d.getVar('IMX8_DIR')}"
+INSTALL_LPR = "${@ 'false' if 'imx6' in d.getVar('MACHINE') else 'true'}"
+
 CURRENT_APP_NAME = ""
 CURRENT_REQ_FILE = ""
 
 # meson configuration
 EXTRA_OEMESON += " \
         -Dapps_install_dir='/home/root/apps' \
-		-Dlibcxxopts='${STAGING_INCDIR}/cxxopts' \
+        -Dinstall_lpr='${INSTALL_LPR}' \
+        -Dlibcxxopts='${STAGING_INCDIR}/cxxopts' \
         -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
         "
 addtask install_requirements after do_install before do_package
@@ -57,9 +68,9 @@ fakeroot install_app_dir() {
     # copy the app shell script into the app path
     install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
     if [ -d "${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs" ]; then
-	    install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
-	    install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/*.json ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
-    fi 
+        install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+        install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/*.json ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+    fi
 }
 
 do_install_append() {
@@ -78,7 +89,7 @@ python do_set_requirements_src_uris() {
             stripped_line = line.strip().split(' -> ')
             url = stripped_line[0]
             md5sum = stripped_line[2]
-            # set src_uri from app url + md5sum, do_fetch task will use it 
+            # set src_uri from app url + md5sum, do_fetch task will use it
             src_uri = ' {};md5sum={}'.format(url, md5sum)
             d.appendVar('SRC_URI', src_uri)
 }
