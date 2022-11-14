@@ -3,10 +3,10 @@ DESCRIPTION = "gsthailotools GStreamer plugin \
                and copies it to usr/lib/gstreamer-1.0 (gstreamer's plugins directory) "
 
 LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
+LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "3d5a2abf3fb6a0425c6d253a6a1608d68b65abed"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
+SRCREV = "febf9d8da5ea69b2eae71322fcb5a6516d1440f4"
 
 inherit hailotools-base
 
@@ -17,7 +17,7 @@ do_install_append() {
 }
 
 
-DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base rapidjson"
+DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base rapidjson cppzmq zeromq"
 EXTRA_OEMESON += " \
     -Dlibrapidjson='${STAGING_INCDIR}/rapidjson' \
     "
