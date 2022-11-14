@@ -5,10 +5,10 @@ DESCRIPTION = "pyhailort - hailo's python API \
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://../../../../LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
-                    file://../../../../LICENSE-3RD-PARTY.md;md5=92bc69276de2a738ff7c2f8513f6116f"
+                    file://../../../../LICENSE-3RD-PARTY.md;md5=ea42899a0b22dc2df0970ea074a38645"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "d61a3bc83f29febb3c808e69ffb5fe819a60bf31"
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=develop"
+SRCREV = "2af498cd35803c297d31d852ec414582acaa8958"
 
 S = "${WORKDIR}/git/hailort/libhailort/bindings/python/platform"
 
@@ -17,8 +17,8 @@ DEPENDS = "python3 pyhailort-shared python3-wheel-native"
 inherit setuptools3
 
 RDEPENDS_${PN} += "libhailort python3-future python3-importlib-metadata python3-netifaces \
-				   python3-appdirs python3-contextlib2 python3-netaddr \
-				   python3-argcomplete python3-verboselogs python3-numpy"
+				   python3-appdirs python3-contextlib2 python3-netaddr python3-argcomplete \
+				   python3-verboselogs python3-numpy python3-setuptools"
 
 PACKAGE_NAME = "hailo_platform"
 
