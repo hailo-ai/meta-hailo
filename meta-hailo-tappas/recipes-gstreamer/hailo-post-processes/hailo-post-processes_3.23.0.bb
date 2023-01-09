@@ -3,10 +3,10 @@ DESCRIPTION = "Tappas post processes \
                and copies it to usr/lib/hailo-post-processes"
 
 LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
+LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "3d5a2abf3fb6a0425c6d253a6a1608d68b65abed"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
+SRCREV = "a9d5dfaf1d87111672a2ef02acef85392f8d8dfb"
 
 inherit hailotools-base
 
