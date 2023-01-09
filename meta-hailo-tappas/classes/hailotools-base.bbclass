@@ -3,7 +3,7 @@
 
 inherit meson pkgconfig
 
-S = "${WORKDIR}/git/core/hailo/gstreamer"
+S = "${WORKDIR}/git/core/hailo"
 
 DEPENDS = "libgsthailo libhailort opencv xtensor xtl"
 
@@ -19,7 +19,7 @@ EXTRA_OEMESON += " \
         -Dlibxtensor='${STAGING_INCDIR}/xtensor' \
         -Dinclude_blas=false \
         -Dtarget='${TAPPAS_BUILD_TARGET}' \
-        -Dtarget_platform='imx' \
+        -Dtarget_platform='imx8' \
         -Dcpp_std='c++17' \
         --buildtype='${TAPPAS_BUILD_TYPE}' \
         "
