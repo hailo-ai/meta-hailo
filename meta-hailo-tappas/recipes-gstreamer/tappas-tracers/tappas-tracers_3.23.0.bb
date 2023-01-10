@@ -5,12 +5,16 @@ DESCRIPTION = "tappas-tracers GStreamer plugin \
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=develop"
-SRCREV = "febf9d8da5ea69b2eae71322fcb5a6516d1440f4"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
+SRCREV = "a9d5dfaf1d87111672a2ef02acef85392f8d8dfb"
 
 inherit hailotools-base
 
 do_install_append() {
+    # Meson installs shared objects in apps target,
+    # we remove it from the rootfs to prevent duplication with libgsthailotools
+    rm -rf ${D}/usr/lib/libgsthailometa*
+
     rm -f ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so
     find ${D}/${libdir}/gstreamer-1.0/ -name 'libgstsharktracers.so.[0-9]' -delete
     mv -f ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so
