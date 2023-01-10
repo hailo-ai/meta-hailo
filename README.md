@@ -22,7 +22,7 @@ Please follow the recommended setup procedures of your OE distribution.
 ### Supported branches
 
 We follow the branching naming convention described at https://wiki.yoctoproject.org/wiki/Yocto_Project_Branch_Conventions. \
-The only branches that are currently supported are: Zeus, Dunfell, Hardknott, Honister, Kirkstone.
+The branches that are currently supported are: Zeus, Dunfell, Honister, Kirkstone.
 
 ## Documentation
 
