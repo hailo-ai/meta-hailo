@@ -1,18 +1,18 @@
-DESCRIPTION = "hailo firmware eth \
-			   hailo8 chip firmware for using the ethernet interface (hailo_fw.bin) \
-			   the recipe copies the file to /lib/firmware/hailo/ on the target device’s root file system"
+DESCRIPTION = "hailo firmware \
+				hailo8 chip firmware (hailo_fw.bin) \
+				the recipe copies the file to /lib/firmware/hailo/ on the target device’s root file system"
 
 BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo8/${PV}/FW"
-FW = "hailo8_fw.${PV}_eth.bin"
+FW = "hailo8_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=70d763f9a73cbfef1b805e5e22c8adcf \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=4c16a5c7cccc79bde007ce662f583b03 \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
-FW_PATH = "${WORKDIR}/${FW}"
+FW_PATH = "${WORKDIR}/hailo8_fw.${PV}.bin"
 
 do_install() {
 	# Stores hailo8_fw.bin in the rootfs under /lib/firmware/hailo/
