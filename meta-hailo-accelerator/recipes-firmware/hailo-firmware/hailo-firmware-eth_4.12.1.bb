@@ -6,7 +6,7 @@ BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo8/${PV}/FW"
 FW = "hailo8_fw.${PV}_eth.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=70d763f9a73cbfef1b805e5e22c8adcf \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=f39fa03d816ffc53d34a6dd86431b5dc \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
