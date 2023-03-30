@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "d743a077044049a3b739575ea89a841e22f278b1"
+SRCREV = "3c2b49d62aa928529574736dc11377eb32577a50"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -26,9 +26,9 @@ GST_IMAGES_UTIL = "libhailo_gst_image.so"
 
 ROOTFS_APPS_DIR = "${D}/home/root/apps"
 
-GSTREAMER_APPS_DIR = "${WORKDIR}/git/apps/gstreamer/"
-IMX8_DIR = "${GSTREAMER_APPS_DIR}/imx8/"
-IMX6_DIR = "${GSTREAMER_APPS_DIR}/imx6/"
+APPS_DIR_PREFIX = "${WORKDIR}/git/apps/"
+IMX8_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx8/"
+IMX6_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx6/"
 
 REQS_PATH = "${FILE_DIRNAME}/files/"
 REQS_IMX6_FILE = "${REQS_PATH}download_reqs_imx6.txt"
