@@ -30,10 +30,16 @@ TAR_FILE_PATH = "${DL_DIR}/hailort-${P}.tar.gz"
 python do_prepare_hailort_external_dependencies() {
     if (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') == "0"):
         bb.note('Skipping do_prepare_hailort_external_dependencies (HAILORT_OFFLINE_BUILD_ENABLE is not set or is set to "0")')
+        d.setVarFlag("do_configure", "network", "1")
+        d.setVarFlag("do_compile", "network", "1")
         return
     if (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') is not None) and (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') != "0"):
         bb.note('Skipping do_prepare_hailort_external_dependencies (HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR is set)')
         return
+    
+    d.setVarFlag("do_configure", "network", "1")
+    d.setVarFlag("do_compile", "network", "1")
+    
     temp_directory = d.getVar('WORKDIR') + '/temp_prepare_externals'
     # Unpack the sources into a temp dir
     try:
