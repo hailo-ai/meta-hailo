@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://../../../../LICENSE;md5=48b1c947c88868c23e4fb874890be
                     file://../../../../LICENSE-3RD-PARTY.md;md5=6bb4065ba26c9cc3e0761bfefbd6fa27"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "d24971447aeb5c413107a910b44656f25058cc60"
+SRCREV = "86bb9c4968c5c20c311e230ae24be25a02847b20"
 
 S = "${WORKDIR}/git/hailort/libhailort/bindings/python/platform"
 
