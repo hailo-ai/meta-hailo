@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "d743a077044049a3b739575ea89a841e22f278b1"
+SRCREV = "3c2b49d62aa928529574736dc11377eb32577a50"
 
 inherit hailotools-base
 
@@ -16,9 +16,9 @@ do_install:append() {
     # we remove it from the rootfs to prevent duplication with libgsthailotools
     rm -rf ${D}/usr/lib/libgsthailometa*
 
-    rm -f ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so
-    find ${D}/${libdir}/gstreamer-1.0/ -name 'libgstsharktracers.so.[0-9]' -delete
-    mv -f ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgstsharktracers.so
+    rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotracers.so
+    find ${D}/${libdir}/gstreamer-1.0/ -name 'libgsthailotracers.so.[0-9]' -delete
+    mv -f ${D}/${libdir}/gstreamer-1.0/libgsthailotracers.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgsthailotracers.so
 }
 
 
@@ -26,8 +26,8 @@ DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base libg
 
 TAPPAS_BUILD_TARGET = "tracers"
 
-FILES:${PN} += "/usr/lib/gstreamer-1.0/libgstsharktracers.so /usr/lib/gstreamer-1.0/libgstsharktracers.so.${PV}"
-FILES:${PN}-lib += "/usr/lib/gstreamer-1.0/libgstsharktracers.so.${PV} /usr/lib/gstreamer-1.0/libgstsharktracers.so"
+FILES:${PN} += "/usr/lib/gstreamer-1.0/libgsthailotracers.so /usr/lib/gstreamer-1.0/libgsthailotracers.so.${PV}"
+FILES:${PN}-lib += "/usr/lib/gstreamer-1.0/libgsthailotracers.so.${PV} /usr/lib/gstreamer-1.0/libgsthailotracers.so"
 RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""
 RDEPENDS:${PN}-dbg = ""
