@@ -14,12 +14,17 @@ PARALLEL_MAKE = "-j 4"
 GST_HAILO_INCLUDE_DIR = "${STAGING_INCDIR}/gst-hailo/metadata"
 HAILO_INCLUDE_DIR = "${STAGING_INCDIR}/hailort"
 
+TARGET_PLATFORM = ""
+python () {
+        d.setVar('TARGET_PLATFORM', 'imx8')
+}
+
 EXTRA_OEMESON += " \
         -Dlibargs='-I${GST_HAILO_INCLUDE_DIR},-I${HAILO_INCLUDE_DIR}' \
         -Dlibxtensor='${STAGING_INCDIR}/xtensor' \
         -Dinclude_blas=false \
         -Dtarget='${TAPPAS_BUILD_TARGET}' \
-        -Dtarget_platform='imx8' \
+        -Dtarget_platform='${TARGET_PLATFORM}' \
         -Dcpp_std='c++17' \
         --buildtype='${TAPPAS_BUILD_TYPE}' \
         "
