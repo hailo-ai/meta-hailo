@@ -15,6 +15,16 @@ EXTRA_OECMAKE =  "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${LIB_SRC_DIR} \
 EXTRA_OECMAKE:append = "-DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=OFF "
 EXTRA_OECMAKE:append = "-DFETCHCONTENT_FULLY_DISCONNECTED=OFF "
 
+python enable_network() {
+    # Set the network flag to 1 as long as the build isn't offline.
+    if (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') == "0"):
+        d.setVarFlag("do_configure", 'network', '1')
+    elif (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') == "0"):
+        d.setVarFlag("do_prepare_hailort_external_dependencies", 'network', '1')
+}
+
+addhandler enable_network
+enable_network[eventmask] = "bb.event.RecipeParsed"
 
 # Skip cmake do_install process - overrides cmake bbclass
 cmake_do_install() {
@@ -30,16 +40,11 @@ TAR_FILE_PATH = "${DL_DIR}/hailort-${P}.tar.gz"
 python do_prepare_hailort_external_dependencies() {
     if (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') == "0"):
         bb.note('Skipping do_prepare_hailort_external_dependencies (HAILORT_OFFLINE_BUILD_ENABLE is not set or is set to "0")')
-        d.setVarFlag("do_configure", "network", "1")
-        d.setVarFlag("do_compile", "network", "1")
         return
     if (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') is not None) and (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') != "0"):
         bb.note('Skipping do_prepare_hailort_external_dependencies (HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR is set)')
         return
-    
-    d.setVarFlag("do_configure", "network", "1")
-    d.setVarFlag("do_compile", "network", "1")
-    
+
     temp_directory = d.getVar('WORKDIR') + '/temp_prepare_externals'
     # Unpack the sources into a temp dir
     try:

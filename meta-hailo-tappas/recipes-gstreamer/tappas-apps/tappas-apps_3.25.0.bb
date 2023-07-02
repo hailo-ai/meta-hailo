@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "3c2b49d62aa928529574736dc11377eb32577a50"
+SRCREV = "0c9492e3242aef64307bf237e7193849b266a9e4"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -78,7 +78,7 @@ fakeroot install_app_dir() {
     install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
     if [ -d "${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs" ]; then
         install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
-        install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/*.json ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+        install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/* ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
     fi
 }
 
