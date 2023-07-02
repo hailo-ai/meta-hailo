@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "3c2b49d62aa928529574736dc11377eb32577a50"
+SRCREV = "0c9492e3242aef64307bf237e7193849b266a9e4"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -77,6 +77,8 @@ do_install_append() {
     # Meson installs shared objects in apps target,
     # we remove it from the rootfs to prevent duplication with libgsthailotools
     rm -rf ${D}/usr/lib/libgsthailometa*
+    rm -rf ${D}/usr/include/gsthailometa
+    rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
     rm -rf ${D}/usr/lib/libhailo_tracker*
 }
 
