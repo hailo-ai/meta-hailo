@@ -14,10 +14,8 @@ PARALLEL_MAKE = "-j 4"
 GST_HAILO_INCLUDE_DIR = "${STAGING_INCDIR}/gst-hailo/metadata"
 HAILO_INCLUDE_DIR = "${STAGING_INCDIR}/hailort"
 
-TARGET_PLATFORM = ""
-python () {
-        d.setVar('TARGET_PLATFORM', 'imx8')
-}
+TARGET_PLATFORM = "imx8"
+TARGET_PLATFORM:hailo15 = "hailo15"
 
 EXTRA_OEMESON += " \
         -Dlibargs='-I${GST_HAILO_INCLUDE_DIR},-I${HAILO_INCLUDE_DIR}' \
