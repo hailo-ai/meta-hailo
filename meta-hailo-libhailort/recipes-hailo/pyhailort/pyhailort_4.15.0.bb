@@ -5,10 +5,10 @@ DESCRIPTION = "pyhailort - hailo's python API \
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://../../../../LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
-                    file://../../../../LICENSE-3RD-PARTY.md;md5=6bb4065ba26c9cc3e0761bfefbd6fa27"
+                    file://../../../../LICENSE-3RD-PARTY.md;md5=bb40ddf10198e3cbefdab559f4a32153"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "9bce73eb42bad4da7876f6bafa2521f3c411937e"
+SRCREV = "459eaf02343079aa417596cee7daeab3648701ea"
 
 S = "${WORKDIR}/git/hailort/libhailort/bindings/python/platform"
 
