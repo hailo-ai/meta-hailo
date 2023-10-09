@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "0c9492e3242aef64307bf237e7193849b266a9e4"
+SRCREV = "ba00fd3a305ff8e333c624cf1391c4e33ac73432"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -29,10 +29,12 @@ ROOTFS_APPS_DIR = "${D}/home/root/apps"
 APPS_DIR_PREFIX = "${WORKDIR}/git/apps/"
 IMX8_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx8/"
 IMX6_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx6/"
+HAILO15_DIR = "${APPS_DIR_PREFIX}/h15/gstreamer/"
 
 REQS_PATH = "${FILE_DIRNAME}/files/"
 REQS_IMX6_FILE = "${REQS_PATH}download_reqs_imx6.txt"
 REQS_IMX8_FILE = "${REQS_PATH}download_reqs_imx8.txt"
+REQS_HAILO15_FILE = "${REQS_PATH}download_reqs_hailo15.txt"
 
 REQS_FILE = ""
 ARM_APPS_DIR = ""
@@ -40,9 +42,12 @@ python () {
     if 'imx6' in d.getVar('MACHINE'):
         d.setVar('REQS_FILE', d.getVar('REQS_IMX6_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('IMX6_DIR'))
-    else:
+    elif 'imx8' in d.getVar('MACHINE'):
         d.setVar('REQS_FILE', d.getVar('REQS_IMX8_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('IMX8_DIR'))
+    else:
+        d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
+        d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
 }
 
 INSTALL_LPR = "${@ 'false' if 'imx6' in d.getVar('MACHINE') else 'true'}"

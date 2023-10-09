@@ -1,0 +1,76 @@
+export TAPPAS_WORKSPACE="$(realpath ~)"
+
+function gst_set_debug() {
+    # set gstreamer debug
+    export GST_SHARK_LOCATION=/tmp/profile
+    export GST_DEBUG="GST_TRACER:7,GST_PIPELINE:4"
+    export GST_DEBUG_FILE=$TAPPAS_WORKSPACE/tappas_traces.log
+    export GST_DEBUG_NO_COLOR=1
+
+    if [[ "$1" == "-r" ]]; then
+        echo "Exporting in reduced mode"
+        export GST_TRACERS="cpuusage;proctime;interlatency;framerate;queuelevel;graphic"
+    else
+        export GST_TRACERS="cpuusage;proctime;interlatency;scheduletime;bitrate;framerate;queuelevel;threadmonitor;numerator;buffer;bufferdrop;detections;graphic"
+    fi
+
+    echo 'Options for TRACERS:"'
+    echo 'export GST_TRACERS="cpuusage;proctime;interlatency;scheduletime;bitrate;framerate;queuelevel;threadmonitor;numerator;buffer;bufferdrop;detections;graphic"'
+}
+
+function gst_set_graphic() {
+    # set trace to collect graphic data of gstreamer pipeline
+    export GST_SHARK_LOCATION=/tmp/profile
+    export GST_DEBUG_DUMP_DOT_DIR=/tmp/
+    export GST_DEBUG="GST_TRACER:7"
+    export GST_TRACERS="graphic"
+    echo 'export GST_TRACERS="graphic"'
+}
+
+function gst_unset_debug() {
+    # unset gstreamer debug
+    unset GST_TRACERS
+    unset GST_DEBUG
+    unset GST_DEBUG_DUMP_DOT_DIR
+    unset GST_SHARK_LOCATION
+    unset GST_DEBUG_FILE
+    unset GST_DEBUG_NO_COLOR
+}
+
+function __split_tracers() {
+    split_traces_dir=$1
+    mkdir -p $split_traces_dir
+
+    #read value of environment variable GST_TRACERS and split it into an array of tracers, then loop through the array and create a file for each tracer
+    IFS=';' read -ra tracers <<<"$GST_TRACERS"
+
+    for trace in "${tracers[@]}"; do
+        if [[ $trace == "graphic" ]]; then
+            continue
+        fi
+
+        cat $GST_DEBUG_FILE | awk '!/gsttracer.c|GST_PIPELINE|gsttracerrecord.c/' | grep $trace | tr -s ' ' >$split_traces_dir/$trace.log
+    done
+
+    # Extract the gst_launch
+    pipeline=$(cat $GST_DEBUG_FILE | grep GST_PIPELINE | grep "parsing pipeline description" | head -n 1 | awk -F"'" '{print $2}')
+
+    if [ -n "$pipeline" ]; then
+        echo $pipeline > $split_traces_dir/pipeline.log
+    fi
+}
+
+function gst_prepare_tracers_dir() {
+    # plot the gst-shark dump files
+    export GST_SHARK_LOCATION=/tmp/profile
+
+    split_traces_dir=$TAPPAS_WORKSPACE/tappas_traces_$(date +%d_%m_%Y_%H_%M_%S)
+    mkdir $split_traces_dir
+
+    if ls -rt $GST_SHARK_LOCATION/graphic/pipeline* 1>/dev/null 2>&1; then
+        cp $(ls -rt $GST_SHARK_LOCATION/graphic/pipeline* | tail -n 1) "$split_traces_dir"
+    fi
+
+    __split_tracers $split_traces_dir
+    echo "Splited tracers dir: $split_traces_dir"
+}
