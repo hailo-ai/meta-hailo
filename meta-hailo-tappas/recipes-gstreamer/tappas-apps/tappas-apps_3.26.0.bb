@@ -3,11 +3,11 @@ DESCRIPTION = "TAPPAS ARM applications recipe, \
                the apps hefs and media urls are taken from files/download_reqs.txt"
 
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=v3.26.1"
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "ba00fd3a305ff8e333c624cf1391c4e33ac73432"
+SRCREV = "225bc311d2611a49e2bbae59f839cc6c74a3e12e"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
