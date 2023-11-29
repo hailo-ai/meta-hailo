@@ -5,8 +5,8 @@ DESCRIPTION = "gsthailotools GStreamer plugin \
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=v3.26.1"
-SRCREV = "8871697c97c4d214696b50a2a5a0697dc2ad861c"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=v3.26.2"
+SRCREV = "5a45b458467d5e438611a46842c40b796108e9f6"
 
 inherit hailotools-base
 
