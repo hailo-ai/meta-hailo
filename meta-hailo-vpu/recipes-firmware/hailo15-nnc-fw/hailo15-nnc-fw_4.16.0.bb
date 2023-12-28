@@ -11,7 +11,7 @@ SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=b1f962997dc1efa6b3651c684a67a9
 LICENSE = "LICENSE"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
-FW_PATH = "${WORKDIR}/hailo15_nnc_fw.${PV}.bin"
+FW_PATH = "${WORKDIR}/${FW}"
 
 do_install() {
 	# Stores hailo15_nnc_fw.bin in the rootfs under /lib/firmware/hailo
