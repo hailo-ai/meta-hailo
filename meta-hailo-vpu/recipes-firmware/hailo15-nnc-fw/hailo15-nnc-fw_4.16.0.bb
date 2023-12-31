@@ -5,13 +5,13 @@ BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo15/Hailort/${PV}/FW"
 FW = "hailo15_nnc_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=b1f962997dc1efa6b3651c684a67a92d \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=d11d4e2bf1697bbfff725af74383d743 \
 		   ${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
-FW_PATH = "${WORKDIR}/hailo15_nnc_fw.${PV}.bin"
+FW_PATH = "${WORKDIR}/${FW}"
 
 do_install() {
 	# Stores hailo15_nnc_fw.bin in the rootfs under /lib/firmware/hailo
