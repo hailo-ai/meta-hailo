@@ -1,3 +1,4 @@
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/mobilenet_v1.hef -> apps/h15/gstreamer/classification -> 3c0aa699904edf2748a1a8e21d36fa9c
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_wo_spp_60p.hef -> apps/h15/gstreamer/detection -> 08ffc195b68aa2c0687811dc9c2bc523
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5s_personface.hef -> apps/h15/gstreamer/detection -> 2693de8ae1b0de27667ccc901223fe38
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_wo_spp_60p_nv12.hef -> apps/h15/gstreamer/detection -> 27aa77d68981ebcd6a8ee122133729de
