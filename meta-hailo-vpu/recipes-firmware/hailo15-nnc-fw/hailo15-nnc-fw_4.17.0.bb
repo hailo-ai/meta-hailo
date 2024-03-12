@@ -2,7 +2,7 @@ DESCRIPTION = "Hailo15_NNC FW. \
                This recipe copy the already compiled Hailo15_NNC firmware to the image"
 
 BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
-FW_AWS_DIR = "Hailo15/Hailort/${PV}/FW"
+FW_AWS_DIR = "Hailo15/Hailort/${PV}_dev/FW"
 FW = "hailo15_nnc_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
 SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=d3b8aef81dca7f37cde4c3ef99aa4f8a \
