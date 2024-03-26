@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=v3.28.
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "72710988ae330003e82100206d0c7f7de37de78d"
+SRCREV = "994c96dae9d6f0ac7896ff8f72f3e1e509728ea6"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -48,8 +48,10 @@ python () {
     else:
         d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
+        d.appendVar('DEPENDS', " libgstmedialib xtensor")
 }
 
+IS_H15 = "${@ 'true' if 'hailo15' in d.getVar('MACHINE') else 'false'}"
 INSTALL_LPR = "${@ 'false' if 'imx6' in d.getVar('MACHINE') else 'true'}"
 
 CURRENT_APP_NAME = ""
@@ -94,6 +96,11 @@ do_install:append() {
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
     rm -rf ${D}/usr/lib/libhailo_tracker*
+
+    if [ '${IS_H15}' = 'true' ]; then
+        install -d ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
+        install -m 0755 ${S}/apps/hailo15/encoder_pipelines_new_api/*.json ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
+    fi
 }
 
 python do_set_requirements_src_uris() {
