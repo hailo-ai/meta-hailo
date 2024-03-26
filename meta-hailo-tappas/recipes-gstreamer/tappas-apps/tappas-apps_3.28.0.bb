@@ -96,11 +96,6 @@ do_install:append() {
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
     rm -rf ${D}/usr/lib/libhailo_tracker*
-
-    if [ '${IS_H15}' = 'true' ]; then
-        install -d ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
-        install -m 0755 ${S}/apps/hailo15/encoder_pipelines_new_api/*.json ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
-    fi
 }
 
 python do_set_requirements_src_uris() {
