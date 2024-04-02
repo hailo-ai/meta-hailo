@@ -4,11 +4,11 @@ DESCRIPTION = "gsthailo gstreamer plugin \
 
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=2607cf352b6f0e5fba219938cb617666 \
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=f491a052559dbcdae697362cd5a13c96 \
                     file://hailort/libhailort/bindings/gstreamer/LICENSE;md5=4b54a1fd55a448865a0b32d41598759d"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "35d9282f36ac4a6c6765ba69a01d0f4f83da9011"
+SRCREV = "a984e26af79ccf17b43adc3f1aec7ff6901badc1"
 
 S = "${WORKDIR}/git"
 
