@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "0a8e243085e2f2928d2358c8c06040c7dc2f7ab9"
+SRCREV = "d6eb4c9543d0cd50869f85c6dab9e48c8b741b6b"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -28,29 +28,26 @@ ROOTFS_APPS_DIR = "${D}/home/root/apps"
 
 APPS_DIR_PREFIX = "${WORKDIR}/git/apps/"
 IMX8_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx8/"
-IMX6_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx6/"
 HAILO15_DIR = "${APPS_DIR_PREFIX}/h15/gstreamer/"
 
 REQS_PATH = "${FILE_DIRNAME}/files/"
-REQS_IMX6_FILE = "${REQS_PATH}download_reqs_imx6.txt"
 REQS_IMX8_FILE = "${REQS_PATH}download_reqs_imx8.txt"
 REQS_HAILO15_FILE = "${REQS_PATH}download_reqs_hailo15.txt"
 
 REQS_FILE = ""
 ARM_APPS_DIR = ""
 python () {
-    if 'imx6' in d.getVar('MACHINE'):
-        d.setVar('REQS_FILE', d.getVar('REQS_IMX6_FILE'))
-        d.setVar('ARM_APPS_DIR', d.getVar('IMX6_DIR'))
-    elif 'imx8' in d.getVar('MACHINE'):
+    if 'imx8' in d.getVar('MACHINE'):
         d.setVar('REQS_FILE', d.getVar('REQS_IMX8_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('IMX8_DIR'))
     else:
         d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
+        d.appendVar('DEPENDS', " libgstmedialib xtensor")
 }
 
-INSTALL_LPR = "${@ 'false' if 'imx6' in d.getVar('MACHINE') else 'true'}"
+IS_H15 = "${@ 'true' if 'hailo15' in d.getVar('MACHINE') else 'false'}"
+INSTALL_LPR = "true"
 
 CURRENT_APP_NAME = ""
 CURRENT_REQ_FILE = ""
@@ -94,6 +91,11 @@ do_install:append() {
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
     rm -rf ${D}/usr/lib/libhailo_tracker*
+
+    if [ '${IS_H15}' = 'true' ]; then
+        install -d ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
+        install -m 0755 ${S}/apps/hailo15/encoder_pipelines_new_api/*.json ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
+    fi
 }
 
 python do_set_requirements_src_uris() {
