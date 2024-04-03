@@ -21,8 +21,10 @@ Please follow the recommended setup procedures of your OE distribution.
 
 ### Supported branches
 
-We follow the branching naming convention described at https://wiki.yoctoproject.org/wiki/Yocto_Project_Branch_Conventions. \
-The branches that are currently supported are: Zeus, Dunfell, Honister, Kirkstone, Mickledore.
+The branches that are currently supported (April 2024): Dunfell, Kirkstone, Mickledore (HailoRT only).
+
+Unsupported branches are no longer updated to support newer versions, but will work when using
+their compatible (older) versions.
 
 ## Documentation
 
