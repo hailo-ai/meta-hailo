@@ -3,10 +3,10 @@ DESCRIPTION = "hailo firmware eth \
 			   the recipe copies the file to /lib/firmware/hailo/ on the target device’s root file system"
 
 BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
-FW_AWS_DIR = "Hailo8/4.17.0_dev/FW"
+FW_AWS_DIR = "Hailo8/${PV}/FW"
 FW = "hailo8_fw.${PV}_eth.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=5f3fbf1b2c6bfa20c1ed90b0a9d9ed50 \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=9d602e6fd68980c3344908dc4d50c37c \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
