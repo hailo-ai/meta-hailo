@@ -1,10 +1,4 @@
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_wo_spp_60p.hef -> apps/h15/gstreamer/detection -> 08ffc195b68aa2c0687811dc9c2bc523
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5s_personface.hef -> apps/h15/gstreamer/detection -> 2693de8ae1b0de27667ccc901223fe38
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_wo_spp_60p_nv12_fhd.hef -> apps/h15/gstreamer/detection -> f02cc05cc720a88f04777db005730340
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_vehicles.hef -> apps/h15/gstreamer/license_plate_recognition -> 6e153fd9a9b223ffaa679867ed73a562
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/tiny_yolov4_license_plates.hef -> apps/h15/gstreamer/license_plate_recognition -> ba2af2080660c4bedbeaadcdc4213aeb
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/lprnet.hef -> apps/h15/gstreamer/license_plate_recognition -> 8a6893008e48ed7300d4901ec7fedd3f
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/yolov5m_vehicles_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> f2a88bf7cac99a48ea5beabb538d02c4
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/tiny_yolov4_license_plates_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 4a62bb74d6b085ce4cd6cecf22d52395
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/lprnet_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> a1b1739d0477d3c0349949ca30c47f6c
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.26/hailo15/hefs/mobilenet_v1.hef -> apps/h15/gstreamer/basic_security_camera_streaming -> 3c0aa699904edf2748a1a8e21d36fa9c
