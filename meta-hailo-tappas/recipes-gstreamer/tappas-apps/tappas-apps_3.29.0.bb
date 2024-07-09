@@ -20,7 +20,6 @@ DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
 RDEPENDS:${PN} += " bash libgsthailotools"
 
 LPR_APP_NAME = "license_plate_recognition"
-WEBSERVER_APP_NAME = "webserver"
 
 OPENCV_UTIL = "libhailo_cv_singleton.so"
 GST_IMAGES_UTIL = "libhailo_gst_image.so"
