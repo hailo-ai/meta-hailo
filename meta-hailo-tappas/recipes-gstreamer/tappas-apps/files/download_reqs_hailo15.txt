@@ -1,5 +1,9 @@
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.28.1/hailo15/hefs/yolov5m_wo_spp_60p_nv12_fhd.hef -> apps/h15/gstreamer/detection -> f02cc05cc720a88f04777db005730340
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.28.1/hailo15/hefs/yolov5m_vehicles_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 759f434afd4b09e832ebd0c5879d06f6
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.28.1/hailo15/hefs/tiny_yolov4_license_plates_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 79a3e0a979e24ffd80f631e3ba174e14
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.28.1/hailo15/hefs/lprnet_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 967c1e41cebad405b6c2aacbdea0942c
-https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.28.1/hailo15/hefs/mobilenet_v1.hef -> apps/h15/gstreamer/basic_security_camera_streaming -> 3c0aa699904edf2748a1a8e21d36fa9c
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/yolov5m_wo_spp_60p_nv12_fhd.hef -> apps/h15/gstreamer/detection -> f02cc05cc720a88f04777db005730340
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/yolov5m_wo_spp_60p_nv12_640.hef -> apps/h15/gstreamer/detection -> 5762b7f4f21890ed47dfeaa073509e64
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/yolov5m_vehicles_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 759f434afd4b09e832ebd0c5879d06f6
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/tiny_yolov4_license_plates_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 79a3e0a979e24ffd80f631e3ba174e14
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/lprnet_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 967c1e41cebad405b6c2aacbdea0942c
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/mobilenet_v1.hef -> apps/h15/gstreamer/basic_security_camera_streaming -> 3c0aa699904edf2748a1a8e21d36fa9c
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/yolov5s_personface_nv12.hef -> apps/h15/gstreamer/ai_example_app -> 84750bf6a3541a3a8e25874d46f61c03
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/tddfa_mobilenet_v1_nv12.hef -> apps/h15/gstreamer/ai_example_app -> 1bae8727571f67ca8f89eaf3ae1b13eb
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.29.0/hailo15/hefs/yolov5m_wo_spp_60p_nv12_640.hef -> apps/h15/gstreamer/webserver -> 5762b7f4f21890ed47dfeaa073509e64

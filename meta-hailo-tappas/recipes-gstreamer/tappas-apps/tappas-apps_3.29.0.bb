@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "4341aa360b7f8b9eac9b2d3b26f79fca562b34e4"
+SRCREV = "0f4813c7683f388886b9900ceaeeb0c4ec49a3f0"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -20,6 +20,7 @@ DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
 RDEPENDS:${PN} += " bash libgsthailotools"
 
 LPR_APP_NAME = "license_plate_recognition"
+WEBSERVER_APP_NAME = "webserver"
 
 OPENCV_UTIL = "libhailo_cv_singleton.so"
 GST_IMAGES_UTIL = "libhailo_gst_image.so"
@@ -43,7 +44,7 @@ python () {
     else:
         d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
-        d.appendVar('DEPENDS', " libgstmedialib xtensor")
+        d.appendVar('DEPENDS', " libmedialib-api xtensor")
 }
 
 IS_H15 = "${@ 'true' if 'hailo15' in d.getVar('MACHINE') else 'false'}"
@@ -77,7 +78,11 @@ fakeroot install_app_dir() {
     # copy the required file into the app path under resources directory
     install -m 0755 ${WORKDIR}/${CURRENT_REQ_FILE} ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources
     # copy the app shell script into the app path
-    install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
+    if ls ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh >/dev/null 2>&1; then
+    	install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
+    else
+        bbnote ".sh file not found, skipping install"
+    fi
     if [ -d "${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs" ]; then
         install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
         install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/* ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
@@ -130,7 +135,7 @@ fakeroot python do_install_requirements() {
 }
 
 
-FILES:${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
+FILES:${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /home/root/apps/${WEBSERVER_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
 FILES:${PN}-lib += "/usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
 RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""
