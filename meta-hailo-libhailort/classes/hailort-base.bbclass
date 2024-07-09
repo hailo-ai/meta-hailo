@@ -7,10 +7,12 @@ BIN_SRC_DIR = "${WORKDIR}/bin/"
 
 OECMAKE_GENERATOR = "Unix Makefiles"
 HAILORT_BUILD_TYPE = "Release"
+HAILO_BUILD_SERVICE ?= "0"
 EXTRA_OECMAKE =  "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${LIB_SRC_DIR} \
                   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=${BIN_SRC_DIR} \
                   -DCMAKE_BUILD_TYPE=${HAILORT_BUILD_TYPE}        \
-                  -DCMAKE_SKIP_RPATH=ON"
+                  -DCMAKE_SKIP_RPATH=ON                           \
+                  -DHAILO_BUILD_SERVICE=${HAILO_BUILD_SERVICE}"
 
 # Skip cmake do_install process - overrides cmake bbclass
 cmake_do_install() {
