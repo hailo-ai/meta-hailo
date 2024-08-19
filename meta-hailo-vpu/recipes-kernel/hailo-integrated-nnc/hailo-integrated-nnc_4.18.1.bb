@@ -6,8 +6,8 @@ DESCRIPTION = "hailo integrated nnc driver \
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "7161f9ee5918029bd4497f590003c2f87ec32507"
+SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master-v4.18.1"
+SRCREV = "70e5ec435cf357991ee899764b011d2ef816f4b6"
 
 inherit module
 

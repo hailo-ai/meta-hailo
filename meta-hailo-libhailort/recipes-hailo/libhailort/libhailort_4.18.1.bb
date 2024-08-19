@@ -5,8 +5,8 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
                     file://hailort/LICENSE-3RD-PARTY.md;md5=0b218cdfba3046481fb21963f50be29a"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "01e4c7f5a7463cc61ef1b2d22c31dd80a3a07d95"
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master-v4.18.1"
+SRCREV = "6e46dfc48e52448d708f7912549bd46cdcdc1575"
 
 S = "${WORKDIR}/git"
 
