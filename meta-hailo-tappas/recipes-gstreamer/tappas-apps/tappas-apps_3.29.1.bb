@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "4327923422ababaf3a9395f86bf39f5b34dcfd83"
+SRCREV = "caafd9aac3841ee569f2b3bfb7cd6ff11f21eb6a"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -20,6 +20,7 @@ DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
 RDEPENDS:${PN} += " bash libgsthailotools"
 
 LPR_APP_NAME = "license_plate_recognition"
+WEBSERVER_APP_NAME = "webserver"
 
 OPENCV_UTIL = "libhailo_cv_singleton.so"
 GST_IMAGES_UTIL = "libhailo_gst_image.so"
@@ -134,7 +135,7 @@ fakeroot python do_install_requirements() {
 }
 
 
-FILES:${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
+FILES:${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /home/root/apps/${WEBSERVER_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
 FILES:${PN}-lib += "/usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
 RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""

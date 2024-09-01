@@ -6,7 +6,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
-PACKAGES = "packagegroup-hailo-hailort"
+PACKAGES = "\
+            packagegroup-hailo-hailort \
+            packagegroup-hailo-hailort-dev-pkg"
 
 RDEPENDS:${PN} = "\
     hailortcli \
