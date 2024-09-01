@@ -6,7 +6,7 @@ DESCRIPTION = "hailo pcie driver \
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master-v4.18.1"
+SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
 SRCREV = "70e5ec435cf357991ee899764b011d2ef816f4b6"
 
 inherit module
