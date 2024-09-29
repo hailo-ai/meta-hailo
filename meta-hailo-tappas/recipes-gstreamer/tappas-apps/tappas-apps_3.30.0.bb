@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master
 
 S = "${WORKDIR}/git/core/hailo"
 
-SRCREV = "4327923422ababaf3a9395f86bf39f5b34dcfd83"
+SRCREV = "6454e9b271191c752535e0eca9c4792180810eee"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
@@ -17,10 +17,9 @@ inherit hailotools-base
 TAPPAS_BUILD_TARGET = "apps"
 
 DEPENDS += " gstreamer1.0 gstreamer1.0-plugins-base cxxopts rapidjson"
-RDEPENDS:${PN} += " bash libgsthailotools"
+RDEPENDS_${PN} += " bash libgsthailotools"
 
 LPR_APP_NAME = "license_plate_recognition"
-WEBSERVER_APP_NAME = "webserver"
 
 OPENCV_UTIL = "libhailo_cv_singleton.so"
 GST_IMAGES_UTIL = "libhailo_gst_image.so"
@@ -29,25 +28,12 @@ ROOTFS_APPS_DIR = "${D}/home/root/apps"
 
 APPS_DIR_PREFIX = "${WORKDIR}/git/apps/"
 IMX8_DIR = "${APPS_DIR_PREFIX}/h8/gstreamer/imx8/"
-HAILO15_DIR = "${APPS_DIR_PREFIX}/h15/gstreamer/"
 
 REQS_PATH = "${FILE_DIRNAME}/files/"
 REQS_IMX8_FILE = "${REQS_PATH}download_reqs_imx8.txt"
-REQS_HAILO15_FILE = "${REQS_PATH}download_reqs_hailo15.txt"
 
-REQS_FILE = ""
-ARM_APPS_DIR = ""
-python () {
-    if 'imx8' in d.getVar('MACHINE'):
-        d.setVar('REQS_FILE', d.getVar('REQS_IMX8_FILE'))
-        d.setVar('ARM_APPS_DIR', d.getVar('IMX8_DIR'))
-    else:
-        d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
-        d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
-        d.appendVar('DEPENDS', " libmedialib-api xtensor")
-}
-
-IS_H15 = "${@ 'true' if 'hailo15' in d.getVar('MACHINE') else 'false'}"
+REQS_FILE = "${@ d.getVar('REQS_IMX8_FILE')}"
+ARM_APPS_DIR = "${@ d.getVar('IMX8_DIR')}"
 INSTALL_LPR = "true"
 
 CURRENT_APP_NAME = ""
@@ -78,29 +64,20 @@ fakeroot install_app_dir() {
     # copy the required file into the app path under resources directory
     install -m 0755 ${WORKDIR}/${CURRENT_REQ_FILE} ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources
     # copy the app shell script into the app path
-    if ls ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh >/dev/null 2>&1; then
-    	install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
-    else
-        bbnote ".sh file not found, skipping install"
-    fi
+    install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/*.sh ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}
     if [ -d "${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs" ]; then
         install -d ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
-        install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/* ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
+        install -m 0755 ${ARM_APPS_DIR}/${CURRENT_APP_NAME}/configs/*.json ${ROOTFS_APPS_DIR}/${CURRENT_APP_NAME}/resources/configs
     fi
 }
 
-do_install:append() {
+do_install_append() {
     # Meson installs shared objects in apps target,
     # we remove it from the rootfs to prevent duplication with libgsthailotools
     rm -rf ${D}/usr/lib/libgsthailometa*
+    rm -rf ${D}/usr/lib/libhailo_tracker*
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
-    rm -rf ${D}/usr/lib/libhailo_tracker*
-
-    if [ '${IS_H15}' = 'true' ]; then
-        install -d ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
-        install -m 0755 ${S}/apps/hailo15/encoder_pipelines_new_api/*.json ${ROOTFS_APPS_DIR}/encoder_pipelines_new_api/configs/
-    fi
 }
 
 python do_set_requirements_src_uris() {
@@ -134,9 +111,8 @@ fakeroot python do_install_requirements() {
             bb.build.exec_func('install_app_dir', d)
 }
 
-
-FILES:${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /home/root/apps/${WEBSERVER_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
-FILES:${PN}-lib += "/usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
-RDEPENDS:${PN}-staticdev = ""
-RDEPENDS:${PN}-dev = ""
-RDEPENDS:${PN}-dbg = ""
+FILES_${PN} += " /home/root/apps/* /home/root/apps/${LPR_APP_NAME}/* /home/root/apps/${LPR_APP_NAME}/resources/* /usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
+FILES_${PN}-lib += "/usr/lib/${OPENCV_UTIL}.${PV} /usr/lib/${GST_IMAGES_UTIL}.${PV}"
+RDEPENDS_${PN}-staticdev = ""
+RDEPENDS_${PN}-dev = ""
+RDEPENDS_${PN}-dbg = ""
