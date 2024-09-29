@@ -1,0 +1,6 @@
+internals/diagnostic_pipelines
+internals/hailoupload_pipelines
+internals/integration_pipelines
+internals/hailonet2_pipelines
+internals/frontend_pipelines
+internals/multiple_elements

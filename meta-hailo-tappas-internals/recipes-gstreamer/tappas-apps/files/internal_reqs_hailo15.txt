@@ -1,0 +1,2 @@
+sftp://hailo@192.168.12.21:/mnt/v02/sdk/releases/tappas/v3.30.0/hailo15/hefs/yolov5m_wo_spp_60p_nv12_fhd.hef -> apps/h15/gstreamer/internals/hailonet2_pipelines -> f02cc05cc720a88f04777db005730340
+sftp://hailo@192.168.12.21:/mnt/v02/sdk/releases/tappas/v3.30.0/hailo15/hefs/yolov8s.hef -> apps/h15/gstreamer/internals/frontend_pipelines -> 391ece4c8d8fbefdda3236dc3acfc455
