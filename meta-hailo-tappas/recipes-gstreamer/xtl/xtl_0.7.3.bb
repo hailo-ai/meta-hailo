@@ -14,4 +14,4 @@ do_install(){
     cp -r ${S}/include/xtl/* ${D}${includedir}/xtl
 }
 
-FILES:${PN} += "/usr/include/* /usr/include/xtl/*"
+FILES_${PN} += "/usr/include/* /usr/include/xtl/*"
