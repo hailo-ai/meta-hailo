@@ -12,10 +12,12 @@ PACKAGES = "\
 
 RDEPENDS:${PN} = "\
     hailo-post-processes \
+    libgsthailo \
     libgsthailotools"
 
 RDEPENDS:${PN}-dev-pkg = "\
     packagegroup-hailo-tappas \
     tappas-apps \
     tappas-tracers \
-    opencv"
+    opencv \
+        "

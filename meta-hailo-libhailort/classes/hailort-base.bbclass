@@ -21,6 +21,7 @@ python enable_network() {
     # Set the network flag to 1 as long as the build isn't offline.
     if (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_ENABLE') == "0"):
         d.setVarFlag("do_configure", 'network', '1')
+        d.setVarFlag("do_compile", 'network', '1')
     elif (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') is None) or (d.getVar('HAILORT_OFFLINE_BUILD_USE_EXISTING_TAR') == "0"):
         d.setVarFlag("do_prepare_hailort_external_dependencies", 'network', '1')
 }
