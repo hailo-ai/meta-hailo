@@ -1,5 +1,6 @@
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/yolov5m_wo_spp_60p_nv12_fhd.hef -> apps/h15/gstreamer/detection -> f02cc05cc720a88f04777db005730340
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/yolov5m_wo_spp_60p_nv12_640.hef -> apps/h15/gstreamer/detection -> 5762b7f4f21890ed47dfeaa073509e64
+https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/yolov8s.hef -> apps/h15/gstreamer/detection -> 391ece4c8d8fbefdda3236dc3acfc455
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/yolov5m_vehicles_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 759f434afd4b09e832ebd0c5879d06f6
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/tiny_yolov4_license_plates_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 79a3e0a979e24ffd80f631e3ba174e14
 https://hailo-tappas.s3.eu-west-2.amazonaws.com/v3.30/hailo15/hefs/lprnet_nv12.hef -> apps/h15/gstreamer/license_plate_recognition -> 967c1e41cebad405b6c2aacbdea0942c
