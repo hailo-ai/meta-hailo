@@ -5,7 +5,7 @@ DESCRIPTION = "TAPPAS Hailo15 native applications recipe, \
 inherit tappas-base tappas-apps-base
 
 S = "${WORKDIR}/git/apps/h15/native"
-LIC_FILES_CHKSUM = "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
+LIC_FILES_CHKSUM += "file://../../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS += " cxxopts reference-camera-api opencv httplib libdatachannel"
 # meson configuration
 EXTRA_OEMESON += " \
