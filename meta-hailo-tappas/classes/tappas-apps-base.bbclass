@@ -4,7 +4,7 @@
 PV_PARSED = "${@ '${PV}'.replace('.0', '')}"
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master-vpu"
 
-SRCREV = "a3f33a010784c0e11c7f10e9d5d47e4583649877"
+SRCREV = "032c2dff1927663ddecd2ff93fcfcaa18df426d3"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
