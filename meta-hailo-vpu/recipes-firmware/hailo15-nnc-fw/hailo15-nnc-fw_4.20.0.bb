@@ -3,9 +3,9 @@ DESCRIPTION = "Hailo15_NNC FW. \
 
 BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo15/Hailort/${PV}/FW"
-FW = "hailo15_nnc_fw.${PV}.bin"
+FW = "${HAILO_HOST_NAME}_nnc_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=f04c2db40042a3d53a6185d65e8ce1b4 \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=b7e66d20ffd988e6c8d65218dc72a42d \
 		   ${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
@@ -16,7 +16,7 @@ FW_PATH = "${WORKDIR}/${FW}"
 do_install() {
 	# Stores hailo15_nnc_fw.bin in the rootfs under /lib/firmware/hailo
 	install -d ${D}/lib/firmware/hailo
-	install -m 0755 ${FW_PATH} ${D}/lib/firmware/hailo/hailo15_nnc_fw.bin
+	install -m 0755 ${FW_PATH} ${D}/lib/firmware/hailo/${HAILO_HOST_NAME}_nnc_fw.bin
 }
 
-FILES:${PN} += "/lib /lib/* /lib/firmware/hailo/hailo15_nnc_fw*"
+FILES:${PN} += "/lib /lib/* /lib/firmware/hailo/${HAILO_HOST_NAME}_nnc_fw*"

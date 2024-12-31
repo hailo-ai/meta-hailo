@@ -4,11 +4,11 @@ DESCRIPTION = "gsthailo GStreamer plugin \
 
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=48b1c947c88868c23e4fb874890be6fc \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=6679a4286fa6c7e5de9f32d84318ea78 \
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=daecaf63c6ece9ef50791c10c4201645 \
                     file://hailort/libhailort/bindings/gstreamer/LICENSE;md5=4b54a1fd55a448865a0b32d41598759d"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "3d673252095c11a99147a6e72b4c11150ebd0882"
+SRCREV = "542ba8f3cd95ed85175083ee4add00167c50f668"
 
 S = "${WORKDIR}/git"
 
@@ -24,6 +24,7 @@ OECMAKE_TARGET_COMPILE = "gsthailo"
 
 GST_HAILO_SOURCES_DIR = "${S}/hailort/libhailort/bindings/gstreamer/gst-hailo"
 GST_HAILO_INCLUDE_STAGING_DIR = "${D}${includedir}/gst-hailo"
+GST_HAILO_INCLUDE_STAGING_INCLUDE_DIR = "${GST_HAILO_INCLUDE_STAGING_DIR}/metadata"
 
 do_install() {
     # copy libgsthailo shared object to usr/lib/gstreamer-1.0 in the rootfs - so gstreamer could load it
@@ -31,9 +32,11 @@ do_install() {
     install -m 0755 ${LIB_SRC_DIR}libgsthailo.so  ${D}${libdir}/gstreamer-1.0
 
     install -d ${GST_HAILO_INCLUDE_STAGING_DIR}
+    install -d ${GST_HAILO_INCLUDE_STAGING_INCLUDE_DIR}
     cd ${GST_HAILO_SOURCES_DIR}
     find . -type f -name \*.hpp -exec install -D {} ${GST_HAILO_INCLUDE_STAGING_DIR}/{} \;
+    find . -type f -name \*.h -exec install -D {} ${GST_HAILO_INCLUDE_STAGING_INCLUDE_DIR}/{} \;
 }
 
 FILES:${PN} += "${libdir}/gstreamer-1.0/libgsthailo.so"
-FILES:${PN}-dev += "${includedir}/gst-hailo ${includedir}/gst-hailo/*"
+FILES:${PN}-dev += "${includedir}/gst-hailo ${includedir}/gst-hailo/* ${includedir}/gst-hailo/include ${includedir}/gst-hailo/include/*"
