@@ -15,7 +15,7 @@ inherit pkgconfig hailort-base python3native setuptools3
 DEPENDS += "python3-wheel-native libhailort python3-pybind11 git-native"
 RDEPENDS:${PN} += "libhailort python3-future python3-importlib-metadata python3-netifaces \
                    python3-appdirs python3-contextlib2 python3-netaddr \
-                   python3-argcomplete python3-verboselogs python3-numpy python3-setuptools"
+                   python3-argcomplete python3-numpy python3-setuptools"
 
 do_compile:prepend() {
     # these cmake params should have been propagated directly to cmake. However, we inherit setuptools3 and setup.py
