@@ -8,7 +8,7 @@ LICENSE_FILE = "LICENSE"
 SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};name=fw_${HAILO_SOC_NAME} \
 		   ${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
-SRC_URI[fw_hailo15.sha256sum] = "68eed6cec80f7990f12e6604f45880b10fc1d9de824911126566c7e8faf3f085"
+SRC_URI[fw_hailo15.sha256sum] = "2d3f4a913796a119559b7bfec39b7db4a6ffacd15da3a9f6582c23b4f99c3070"
 SRC_URI[fw_hailo15l.sha256sum] = "2d3f4a913796a119559b7bfec39b7db4a6ffacd15da3a9f6582c23b4f99c3070"
 
 LICENSE = "LICENSE"
