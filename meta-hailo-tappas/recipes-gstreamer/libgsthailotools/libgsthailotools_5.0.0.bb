@@ -11,9 +11,9 @@ SRCREV = "fedeb45f5c52f94d20925f4bfeaa12f1f0a94576"
 inherit hailotools-base
 
 do_install:append() {
-    rm -f ${D}/${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so
-    rm -f ${D}/${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so.[0-9]
-    mv -f ${D}/${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so.${PV} ${D}/${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so
+    rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
+    rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.[0-9]
+    mv -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
 }
 
 
@@ -25,8 +25,8 @@ EXTRA_OEMESON += " \
 # libgsthailotools requires opencv, xtensor, xtl, and libgsthailo to compile and run
 TAPPAS_BUILD_TARGET = "plugins"
 
-FILES:${PN} += "${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so  ${libdir}/aarch64-linux-gnu/libgsthailometa.so.${PV} ${libdir}/aarch64-linux-gnu/libhailo_tracker.so.${PV}"
-FILES:${PN}-lib += "${libdir}/aarch64-linux-gnu/libgsthailometa.so.${PV} ${libdir}/aarch64-linux-gnu/libhailo_tracker.so.${PV} ${libdir}/aarch64-linux-gnu/gstreamer-1.0/libgsthailotools.so"
+FILES:${PN} += "${libdir}/gstreamer-1.0/libgsthailotools.so  ${libdir}/libgsthailometa.so.${PV} ${libdir}/libhailo_tracker.so.${PV}"
+FILES:${PN}-lib += "${libdir}/libgsthailometa.so.${PV} ${libdir}/libhailo_tracker.so.${PV} ${libdir}/gstreamer-1.0/libgsthailotools.so"
 RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""
 RDEPENDS:${PN}-dbg = ""
