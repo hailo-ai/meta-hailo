@@ -5,8 +5,8 @@ DESCRIPTION = "Tappas post processes \
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master-5.0"
-SRCREV = "fedeb45f5c52f94d20925f4bfeaa12f1f0a94576"
+SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
+SRCREV = "86de5271c78429a093f8707bdaf413d5569beaeb"
 
 inherit hailotools-base
 
