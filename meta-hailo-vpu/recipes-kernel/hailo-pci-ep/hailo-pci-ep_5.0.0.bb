@@ -7,7 +7,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "52bebfa2caee4478ef85c266dadd46b21fdcd4e9"
+SRCREV = "7d71f3860a7eecd158221bd216d1520a67a60889"
 
 inherit module
 
