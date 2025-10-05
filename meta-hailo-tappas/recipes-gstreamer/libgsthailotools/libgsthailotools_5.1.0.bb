@@ -12,7 +12,7 @@ inherit hailotools-base
 
 do_install:append() {
     rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
-    find ${D}/${libdir}/gstreamer-1.0/ -name 'libgsthailotools.so.[0-9]' -delete
+    rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.[0-9]
     mv -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
 }
 
