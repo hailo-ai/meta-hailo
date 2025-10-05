@@ -4,10 +4,10 @@ DESCRIPTION = "hailortcli - command line utility wrapper for libhailort operatio
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=87f8edc8e3d5342f8b0614df5bae3b58"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=52e1117309dfa1127f21647483138f20"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "0df636dcb6be9b3943a458591ad5213674a9845d"
+SRCREV = "3b0e7a72d291299b6d3447333d920e6688060f71"
 
 S = "${WORKDIR}/git"
 
