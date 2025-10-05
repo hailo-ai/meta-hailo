@@ -10,6 +10,7 @@ inherit packagegroup
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
 RDEPENDS:${PN}-base = "\
+    hailort-server \
     hailortcli \
     libhailort \
     "

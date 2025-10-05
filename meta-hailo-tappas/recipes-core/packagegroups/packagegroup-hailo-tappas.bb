@@ -17,6 +17,7 @@ RDEPENDS:${PN} = "\
 
 RDEPENDS:${PN}-dev-pkg = "\
     packagegroup-hailo-tappas \
+    tappas-apps \
     tappas-tracers \
     opencv \
         "

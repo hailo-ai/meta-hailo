@@ -1,18 +1,18 @@
 DESCRIPTION = "gsthailotools GStreamer plugin \
-               compiles the tappas libgsthailotools gstreamer plugin \
+               compiles the tappas libgsthailotools gstreamer plugin \ 
                and copies it to usr/lib/gstreamer-1.0 (gstreamer's plugins directory) "
 
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "86de5271c78429a093f8707bdaf413d5569beaeb"
+SRCREV = "c28209396149d91e6a084890ccd4974a6c144e9a"
 
 inherit hailotools-base
 
 do_install:append() {
     rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
-    rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.[0-9]
+    find ${D}/${libdir}/gstreamer-1.0/ -name 'libgsthailotools.so.[0-9]' -delete
     mv -f ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so.${PV} ${D}/${libdir}/gstreamer-1.0/libgsthailotools.so
 }
 
@@ -30,3 +30,5 @@ FILES:${PN}-lib += "${libdir}/libgsthailometa.so.${PV} ${libdir}/libhailo_tracke
 RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""
 RDEPENDS:${PN}-dbg = ""
+
+DEPENDS:append:hailo15 = " libgstmedialib "

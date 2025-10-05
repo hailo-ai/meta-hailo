@@ -3,10 +3,10 @@ DESCRIPTION = "libhailort - hailo’s API for running inference on the hailo8 ch
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=c76eceb91dfac8d0ef1babec00b69c02"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=52e1117309dfa1127f21647483138f20"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "b58f671244f13a33da9b062667cca0fff8e4823f"
+SRCREV = "3b0e7a72d291299b6d3447333d920e6688060f71"
 
 S = "${WORKDIR}/git"
 
@@ -15,6 +15,13 @@ OECMAKE_TARGET_COMPILE = "libhailort"
 HAILORT_INCLUDE_STAGING_DIR = "${D}${includedir}"
 HAILORT_EXPORT_DIR = "${D}${libdir}/cmake/HailoRT"
 RDEPENDS:${PN} += " libatomic"
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[perfetto] = ",,libperfetto,libperfetto"
+python() {
+    if bb.utils.contains('PACKAGECONFIG', 'perfetto', True, False, d):
+        d.appendVar('EXTRA_OECMAKE', ' -DENABLE_PERFETTO=ON')
+}
 
 do_install:append() {
   install -d ${D}${libdir}
