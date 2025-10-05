@@ -6,7 +6,7 @@ BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo8/${PV}/FW"
 FW = "hailo8_fw.${PV}.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=a28a58e315e3a76615e1ff8878694674 \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=a9a80585a6733674e2ca158ec15971c4 \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
@@ -15,9 +15,10 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1
 FW_PATH = "${WORKDIR}/hailo8_fw.${PV}.bin"
 
 do_install() {
-	# Stores hailo8_fw.bin in the rootfs under /lib/firmware/hailo
-	install -d ${D}/lib/firmware/hailo
-	install -m 0755 ${FW_PATH} ${D}/lib/firmware/hailo/hailo8_fw.bin
+	# Stores hailo8_fw.bin in the rootfs under ${nonarch_base_libdir} - /usr/lib/firmware/hailo
+	install -d ${D}${nonarch_base_libdir}/firmware/hailo
+	install -m 0644 ${FW_PATH} ${D}${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin
 }
 
-FILES:${PN} += "/lib /lib/* /lib/firmware/hailo/hailo8_fw*"
+# Package contents
+FILES:${PN} += "${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin"

@@ -15,9 +15,10 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1
 FW_PATH = "${WORKDIR}/${FW}"
 
 do_install() {
-	# Stores hailo8_fw.bin in the rootfs under /lib/firmware/hailo/
-	install -d ${D}/lib/firmware/hailo
-	install -m 0755 ${FW_PATH} ${D}/lib/firmware/hailo/hailo8_fw.bin
+	# Stores hailo8_fw.bin in the rootfs under ${nonarch_base_libdir} - /usr/lib/firmware/hailo
+	install -d ${D}${nonarch_base_libdir}/firmware/hailo
+	install -m 0644 ${FW_PATH} ${D}${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin
 }
 
-FILES:${PN} += "/lib /lib/* /lib/firmware/hailo/hailo8_fw*"
+# Package contents
+FILES:${PN} += "${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin"
