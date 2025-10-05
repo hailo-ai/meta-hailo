@@ -31,4 +31,3 @@ RDEPENDS:${PN}-staticdev = ""
 RDEPENDS:${PN}-dev = ""
 RDEPENDS:${PN}-dbg = ""
 
-DEPENDS:append:hailo15 = " libgstmedialib "
