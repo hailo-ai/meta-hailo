@@ -6,10 +6,10 @@ LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 
                     file://hailort/LICENSE-3RD-PARTY.md;md5=52e1117309dfa1127f21647483138f20"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
-           https://hailo-hailort.s3.eu-west-2.amazonaws.com/hailo-hailort/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
+           https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
 SRCREV = "3b0e7a72d291299b6d3447333d920e6688060f71"
 
-SRC_URI[tokenizers_cpp.sha256sum] = "a6a3d38f4013a9dbe1364a6cc3b6b405e34b7257ebf63c9e02ab7ebabb5a1873"
+SRC_URI[tokenizers_cpp.sha256sum] = "a5bcc287ded1d5b871ff4f5f69d845641cf00fe9758a42a5022f9ca21c6860f8"
 
 S = "${WORKDIR}/git"
 etcdir = "${D}/etc"
