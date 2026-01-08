@@ -2,11 +2,11 @@ DESCRIPTION = "libhailort - hailo’s API for running inference on the hailo8 ch
                the recipe compiles libhailort and copies it on the target device's root file system"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=52e1117309dfa1127f21647483138f20"
+LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=c858d970eda804f02813be8e047fa07d"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "3b0e7a72d291299b6d3447333d920e6688060f71"
+SRCREV = "41a720b9fedb56a4ee9ea39506afecf3f9ace2eb"
 
 S = "${WORKDIR}/git"
 

@@ -2,14 +2,14 @@ DESCRIPTION = "hailort server - hailort server provides a client-server rpc mech
 
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=52e1117309dfa1127f21647483138f20"
+LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=c858d970eda804f02813be8e047fa07d"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
-SRCREV = "3b0e7a72d291299b6d3447333d920e6688060f71"
+SRCREV = "459eaf02343079aa417596cee7daeab3648701ea"
 
-SRC_URI[tokenizers_cpp.sha256sum] = "a5bcc287ded1d5b871ff4f5f69d845641cf00fe9758a42a5022f9ca21c6860f8"
+SRC_URI[tokenizers_cpp.sha256sum] = "5fa87d0425174667127488dc128b27e11ada4edb1d205b1ffa8bed44b9c9fed0"
 
 S = "${WORKDIR}/git"
 etcdir = "${D}/etc"
@@ -18,6 +18,9 @@ inherit hailort-base
 inherit ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', '', d)}
 
 RDEPENDS:${PN} += "libhailort bash"
+
+SYSVINIT_PRIO = "20"
+SYSVINIT_PRIO:hailo10-usb-dongle = "60"
 
 SYSTEMD_SERVICE:${PN} = "hailort_server.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
@@ -53,7 +56,7 @@ do_install:append() {
     install -d ${etcdir}/init.d
     install -d ${etcdir}/rc5.d
     install -m 0755 -D  ${S}/hailort/hailort_server/hailort_server.sh ${etcdir}/init.d
-    ln -s -r ${etcdir}/init.d/hailort_server.sh ${etcdir}/rc5.d/S20hailort_server.sh
+    ln -s -r ${etcdir}/init.d/hailort_server.sh ${etcdir}/rc5.d/S${SYSVINIT_PRIO}hailort_server.sh
   fi
 }
 

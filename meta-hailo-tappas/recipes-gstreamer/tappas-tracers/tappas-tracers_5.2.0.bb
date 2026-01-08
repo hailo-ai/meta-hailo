@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "c28209396149d91e6a084890ccd4974a6c144e9a"
+SRCREV = "84e6617ebfaa381ab226d59eb56f6587234415f8"
 
 inherit hailotools-base
 
@@ -16,6 +16,7 @@ do_install:append() {
     rm -rf ${D}/usr/lib/libgsthailometa*
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
+    rm -rf ${D}/${libdir}/libhailo_opencv_utils*
 
     rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotracers.so
     find ${D}/${libdir}/gstreamer-1.0/ -name 'libgsthailotracers.so.[0-9]' -delete
