@@ -1,6 +1,6 @@
 DESCRIPTION = "Base class to compile libhailort component"
 
-inherit cmake
+inherit cmake pkgconfig
 
 LIB_SRC_DIR = "${WORKDIR}/lib/"
 BIN_SRC_DIR = "${WORKDIR}/bin/"
