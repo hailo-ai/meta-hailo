@@ -1,0 +1,34 @@
+From 2424a033be56f1b44814e38d4cb091ac308db314 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Wed, 7 Jan 2026 14:45:06 +0100
+Subject: [PATCH 10/18] Link hailortcli with libabsl parts
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+abseil-cpp is a dependency of hailort.
+Link hailortcli with the necessary libraries of abseil-cpp.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/hailortcli/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hailort/hailortcli/CMakeLists.txt b/hailort/hailortcli/CMakeLists.txt
+index 961d271..ae652c2 100644
+--- a/hailort/hailortcli/CMakeLists.txt
++++ b/hailort/hailortcli/CMakeLists.txt
+@@ -72,6 +72,8 @@ target_link_libraries(hailortcli
+     CLI11::CLI11
+     nlohmann_json
+     hailort_common
++    absl_log_internal_check_op
++    absl_log_internal_message
+     dotwriter
+     scheduler_mon_proto
+     profiler_proto)
+-- 
+2.55.0
+

@@ -1,0 +1,63 @@
+From 3cb77d6810b8b626a2c47ececef075ac9b92366c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Wed, 7 Jan 2026 11:37:37 +0100
+Subject: [PATCH 07/18] Use a pre-built dotwriter dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix dotwriter library name to link with.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/cmake/external/dotwriter.cmake | 21 ++-------------------
+ hailort/hailortcli/CMakeLists.txt      |  2 +-
+ 2 files changed, 3 insertions(+), 20 deletions(-)
+
+diff --git a/hailort/cmake/external/dotwriter.cmake b/hailort/cmake/external/dotwriter.cmake
+index 5ee8da9..ac263c2 100644
+--- a/hailort/cmake/external/dotwriter.cmake
++++ b/hailort/cmake/external/dotwriter.cmake
+@@ -1,21 +1,4 @@
+ cmake_minimum_required(VERSION 3.11.0)
+ 
+-include(FetchContent)
+-
+-FetchContent_Declare(
+-    dotwriter
+-    GIT_REPOSITORY https://github.com/hailo-ai/DotWriter
+-    GIT_TAG e5fa8f281adca10dd342b1d32e981499b8681daf # Version master
+-    GIT_SHALLOW TRUE
+-    SOURCE_DIR ${HAILO_EXTERNAL_DIR}/dotwriter-src
+-    SUBBUILD_DIR ${HAILO_EXTERNAL_DIR}/dotwriter-subbuild
+-)
+-
+-# https://stackoverflow.com/questions/65527126/disable-install-for-fetchcontent
+-FetchContent_GetProperties(dotwriter)
+-if(NOT dotwriter_POPULATED)
+-    FetchContent_Populate(dotwriter)
+-    if (NOT HAILO_EXTERNALS_EXCLUDE_TARGETS)
+-        add_subdirectory(${dotwriter_SOURCE_DIR} ${dotwriter_BINARY_DIR} EXCLUDE_FROM_ALL)
+-    endif()
+-endif()
+\ No newline at end of file
++# dummy cmake file, dotwriter does not have any pkgconfig
++# or cmake configuration
+diff --git a/hailort/hailortcli/CMakeLists.txt b/hailort/hailortcli/CMakeLists.txt
+index 203ca98..0c48f0b 100644
+--- a/hailort/hailortcli/CMakeLists.txt
++++ b/hailort/hailortcli/CMakeLists.txt
+@@ -72,7 +72,7 @@ target_link_libraries(hailortcli
+     CLI11::CLI11
+     nlohmann_json
+     hailort_common
+-    DotWriter
++    dotwriter
+     scheduler_mon_proto
+     profiler_proto)
+ 
+-- 
+2.55.0
+

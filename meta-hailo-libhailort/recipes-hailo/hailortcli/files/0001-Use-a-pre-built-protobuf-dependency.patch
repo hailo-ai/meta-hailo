@@ -1,0 +1,154 @@
+From 485179b5de786d9c029c7354b7daf5ad9be0a5ba Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Wed, 7 Jan 2026 06:53:33 +0100
+Subject: [PATCH 01/18] Use a pre-built protobuf dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix targets linking to libprotobuf-lite.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/cmake/external/protobuf.cmake | 66 +--------------------------
+ hailort/hrpc_protocol/CMakeLists.txt  |  2 +-
+ hailort/libhailort/CMakeLists.txt     |  6 +--
+ hailort/rpc/CMakeLists.txt            |  2 +-
+ 4 files changed, 6 insertions(+), 70 deletions(-)
+
+diff --git a/hailort/cmake/external/protobuf.cmake b/hailort/cmake/external/protobuf.cmake
+index 1503920..8d61aa5 100644
+--- a/hailort/cmake/external/protobuf.cmake
++++ b/hailort/cmake/external/protobuf.cmake
+@@ -1,67 +1,3 @@
+ cmake_minimum_required(VERSION 3.11.0)
+ 
+-include(FetchContent)
+-
+-# TODO: support cross generators - https://gitlab.kitware.com/cmake/cmake/-/issues/20536
+-FetchContent_Declare(
+-    protobuf
+-    GIT_REPOSITORY  https://github.com/protocolbuffers/protobuf.git
+-    GIT_TAG         f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c # v21.12
+-    GIT_SHALLOW     TRUE
+-    SOURCE_DIR      ${HAILO_EXTERNAL_DIR}/protobuf-src
+-    SUBBUILD_DIR    ${HAILO_EXTERNAL_DIR}/protobuf-subbuild
+-)
+-
+-FetchContent_GetProperties(protobuf)
+-if(NOT protobuf_POPULATED)
+-    FetchContent_Populate(protobuf)
+-    if (NOT HAILO_EXTERNALS_EXCLUDE_TARGETS)
+-        message(STATUS "Building protobuf::protoc...")
+-        include(${CMAKE_CURRENT_LIST_DIR}/../execute_cmake.cmake)
+-        set(TOOL_BUILD_TYPE "Release")
+-        set(PROTOBUF_INSTALL_DIR ${HAILO_EXTERNAL_DIR}/protobuf-install)
+-
+-        execute_cmake(
+-            SOURCE_DIR ${HAILO_EXTERNAL_DIR}/protobuf-src
+-            BUILD_DIR ${HAILO_EXTERNAL_DIR}/protobuf-build
+-            CONFIGURE_ARGS
+-                -DCMAKE_BUILD_TYPE=${TOOL_BUILD_TYPE}
+-                -DCMAKE_INSTALL_PREFIX=${PROTOBUF_INSTALL_DIR}
+-
+-                -Dprotobuf_BUILD_TESTS:BOOL=OFF
+-                -Dprotobuf_WITH_ZLIB:BOOL=OFF
+-                -Dprotobuf_MSVC_STATIC_RUNTIME:BOOL=OFF
+-            BUILD_ARGS
+-                # NOTE: We are installing instead of building protoc because "hailort\external\protobuf-build\cmake\protobuf-targets.cmake" (in Windows) is based on config type.
+-                # TODO: consider importing protobuf_generate_cpp instead? will it solve it?
+-                --config ${TOOL_BUILD_TYPE} --target install ${CMAKE_EXTRA_BUILD_ARGS}
+-            PARALLEL_BUILD
+-        )
+-
+-        if(WIN32)
+-            set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/cmake)
+-        else()
+-            set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/lib/cmake/protobuf)
+-        endif()
+-
+-        # Include host protobuf for protoc (https://stackoverflow.com/questions/53651181/cmake-find-protobuf-package-in-custom-directory)
+-        include(${PROTOBUF_CONFIG_DIR}/protobuf-config.cmake)
+-        include(${PROTOBUF_CONFIG_DIR}/protobuf-module.cmake)
+-
+-        set(protobuf_BUILD_TESTS OFF CACHE BOOL "Build protobuf tests" FORCE)
+-        set(protobuf_BUILD_PROTOC_BINARIES OFF CACHE BOOL "Build libprotoc and protoc compiler" FORCE)
+-        set(protobuf_MSVC_STATIC_RUNTIME OFF CACHE BOOL "Protobuf MSVC static runtime" FORCE)
+-        set(protobuf_WITH_ZLIB OFF CACHE BOOL "Compile protobuf with zlib" FORCE)
+-        add_subdirectory(${protobuf_SOURCE_DIR} ${protobuf_BINARY_DIR} EXCLUDE_FROM_ALL)
+-
+-        if(NOT MSVC)
+-            set_target_properties(libprotobuf PROPERTIES POSITION_INDEPENDENT_CODE ON)
+-            set_target_properties(libprotobuf-lite PROPERTIES POSITION_INDEPENDENT_CODE ON)
+-        endif()
+-    endif()
+-endif()
+-
+-
+-
+-
+-
++find_package(Protobuf REQUIRED MODULE)
+diff --git a/hailort/hrpc_protocol/CMakeLists.txt b/hailort/hrpc_protocol/CMakeLists.txt
+index fce92db..1553992 100644
+--- a/hailort/hrpc_protocol/CMakeLists.txt
++++ b/hailort/hrpc_protocol/CMakeLists.txt
+@@ -4,7 +4,7 @@ protobuf_generate_cpp(PROTO_RPC_SRC PROTO_RPC_HEADER rpc.proto)
+ get_filename_component(PROTO_HEADER_DIRECTORY ${PROTO_RPC_HEADER} DIRECTORY)
+ 
+ add_library(rpc_proto STATIC EXCLUDE_FROM_ALL ${PROTO_RPC_SRC} ${PROTO_RPC_HEADER})
+-target_link_libraries(rpc_proto libprotobuf-lite)
++target_link_libraries(rpc_proto protobuf-lite)
+ set_target_properties(rpc_proto PROPERTIES CXX_STANDARD 14 GENERATED TRUE POSITION_INDEPENDENT_CODE ON)
+ if(CMAKE_HOST_WIN32)
+     # https://github.com/protocolbuffers/protobuf/tree/master/cmake#notes-on-compiler-warnings
+diff --git a/hailort/libhailort/CMakeLists.txt b/hailort/libhailort/CMakeLists.txt
+index cd48c05..1a7d43b 100644
+--- a/hailort/libhailort/CMakeLists.txt
++++ b/hailort/libhailort/CMakeLists.txt
+@@ -14,7 +14,7 @@ protobuf_generate_python(PROTO_HEF_PY hef.proto) # TODO (HRT-12504): Copy hef_pb
+ protobuf_generate_python(PROTO_HEF_PY tracer_profiler.proto)
+ 
+ add_library(hef_proto ${PROTO_HEF_SRC} ${PROTO_HEF_HEADER} ${PROTO_HEF_PY})
+-target_link_libraries(hef_proto libprotobuf-lite)
++target_link_libraries(hef_proto protobuf-lite)
+ set_target_properties(hef_proto PROPERTIES CXX_STANDARD 14 GENERATED TRUE POSITION_INDEPENDENT_CODE ON)
+ if(CMAKE_HOST_WIN32)
+     # https://github.com/protocolbuffers/protobuf/tree/master/cmake#notes-on-compiler-warnings
+@@ -29,7 +29,7 @@ target_include_directories(hef_proto
+ 
+ protobuf_generate_cpp(PROTO_SCHEDULER_MON_SRC PROTO_SCHEDULER_MON_HEADR scheduler_mon.proto)
+ add_library(scheduler_mon_proto ${PROTO_SCHEDULER_MON_SRC} ${PROTO_SCHEDULER_MON_HEADR})
+-target_link_libraries(scheduler_mon_proto libprotobuf-lite)
++target_link_libraries(scheduler_mon_proto protobuf-lite)
+ set_target_properties(scheduler_mon_proto PROPERTIES CXX_STANDARD 14 GENERATED TRUE POSITION_INDEPENDENT_CODE ON)
+ if(CMAKE_HOST_WIN32)
+     target_compile_options(scheduler_mon_proto PRIVATE /wd4244)
+@@ -43,7 +43,7 @@ target_include_directories(scheduler_mon_proto
+ 
+ protobuf_generate_cpp(PROTO_PROFILER_SRC PROTO_PROFILER_HEADR tracer_profiler.proto)
+ add_library(profiler_proto ${PROTO_PROFILER_SRC} ${PROTO_PROFILER_HEADR})
+-target_link_libraries(profiler_proto libprotobuf-lite)
++target_link_libraries(profiler_proto protobuf-lite)
+ set_target_properties(profiler_proto PROPERTIES CXX_STANDARD 14 GENERATED TRUE POSITION_INDEPENDENT_CODE ON)
+ if(CMAKE_HOST_WIN32)
+     target_compile_options(profiler_proto PRIVATE /wd4244)
+diff --git a/hailort/rpc/CMakeLists.txt b/hailort/rpc/CMakeLists.txt
+index 7823cb5..790c4c0 100644
+--- a/hailort/rpc/CMakeLists.txt
++++ b/hailort/rpc/CMakeLists.txt
+@@ -36,7 +36,7 @@ add_library(hailort_rpc_grpc_proto STATIC EXCLUDE_FROM_ALL
+     ${hailort_rpc_proto_hdrs})
+ 
+ set_target_properties(hailort_rpc_grpc_proto PROPERTIES POSITION_INDEPENDENT_CODE ON)
+-target_link_libraries(hailort_rpc_grpc_proto libprotobuf-lite grpc++_unsecure)
++target_link_libraries(hailort_rpc_grpc_proto protobuf-lite grpc++_unsecure)
+ # Include generated *.pb.h files
+ target_include_directories(hailort_rpc_grpc_proto PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
+ disable_exceptions(hailort_rpc_grpc_proto)
+\ No newline at end of file
+-- 
+2.55.0
+
