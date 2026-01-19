@@ -8,8 +8,6 @@ LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=ed57bbf10be0c74ecf2c80710208b2b3 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=hailo8"
 SRCREV = "63adffec12da88f1e7cfdc07f2e07681671e83e8"
 
-S = "${WORKDIR}/git"
-
 inherit hailort-base
 OECMAKE_TARGET_COMPILE = "libhailort"
 HAILORT_INCLUDE_STAGING_DIR = "${D}${includedir}"
