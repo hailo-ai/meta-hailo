@@ -32,6 +32,16 @@ OECMAKE_TARGET_COMPILE = "libhailort"
 HAILORT_INCLUDE_STAGING_DIR = "${D}${includedir}"
 HAILORT_EXPORT_DIR = "${D}${libdir}/cmake/HailoRT"
 
+# Building against newer abseil-cpp versions require -fpermissive
+# due to this and similar errors:
+#      | .../libhailort/4.23.0/recipe-sysroot/usr/include/absl/log/internal/log_message.h:256:8:
+#      | error: invalid conversion from 'const char*' to 'int' [-fpermissive]
+#  256 |   void CopyToEncodedBuffer(absl::string_view str) ABSL_ATTRIBUTE_NOINLINE;
+#      |        ^~~~~~~~~~~~~~~~~~~
+#      |        |
+#      |        const char*
+CXXFLAGS += "-fpermissive"
+
 do_install:append() {
   install -d ${D}${libdir}
   install -m 0755 ${LIB_SRC_DIR}/libhailort.so.${PV} ${D}${libdir}
