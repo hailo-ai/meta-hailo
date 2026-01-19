@@ -31,11 +31,6 @@ python enable_network() {
 addhandler enable_network
 enable_network[eventmask] = "bb.event.RecipeParsed"
 
-# Skip cmake do_install process - overrides cmake bbclass
-cmake_do_install() {
-    :
-}
-
 # Note: This file must be placed at ${DL_DIR} so that we can build offline (i.e. without network connection)
 TAR_FILE_PATH = "${DL_DIR}/hailort-${P}.tar.gz"
 

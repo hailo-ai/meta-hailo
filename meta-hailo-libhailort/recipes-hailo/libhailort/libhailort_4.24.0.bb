@@ -46,14 +46,6 @@ do_install:append() {
   install -d ${D}${libdir}
   install -m 0755 ${LIB_SRC_DIR}/libhailort.so.${PV} ${D}${libdir}
   ln -s -r ${D}${libdir}/libhailort.so.${PV} ${D}${libdir}/libhailort.so
-
-  install -d ${HAILORT_INCLUDE_STAGING_DIR}
-  cp -r ${S}/hailort/libhailort/include/* ${HAILORT_INCLUDE_STAGING_DIR}/
-
-  install -d ${HAILORT_EXPORT_DIR}
-  install -m 0644 ${WORKDIR}/build/hailort/libhailort/src/*.cmake ${HAILORT_EXPORT_DIR}
-  install -m 0644 ${WORKDIR}/build/hailort/libhailort/src/CMakeFiles/Export/**/*.cmake ${HAILORT_EXPORT_DIR}
-
 }
 
 FILES:${PN} += "${libdir}/libhailort.so.${PV}"
