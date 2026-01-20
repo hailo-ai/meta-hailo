@@ -16,7 +16,7 @@ LIC_FILES_CHKSUM = "file://${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
 S = "${UNPACKDIR}"
 
-FW_PATH = "${S}/hailo8_fw.${PV}.bin"
+FW_PATH = "${S}/${FW}"
 
 do_install() {
 	# Stores hailo8_fw.bin in the rootfs under ${nonarch_base_libdir} - /usr/lib/firmware/hailo
