@@ -3,7 +3,7 @@
 
 inherit meson pkgconfig
 
-S = "${WORKDIR}/git/core/hailo"
+S .= "/core/hailo"
 
 DEPENDS = "libgsthailo libhailort opencv xtensor xtl"
 
