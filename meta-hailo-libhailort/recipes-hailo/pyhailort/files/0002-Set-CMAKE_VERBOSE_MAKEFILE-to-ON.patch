@@ -1,0 +1,33 @@
+From 5fabf6e821bafe578b0e5e329c95d45dcf86017a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Fri, 9 Jan 2026 16:19:33 +0100
+Subject: [PATCH 2/4] Set CMAKE_VERBOSE_MAKEFILE to ON
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This is for debugging.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/libhailort/bindings/python/src/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hailort/libhailort/bindings/python/src/CMakeLists.txt b/hailort/libhailort/bindings/python/src/CMakeLists.txt
+index c3ab8ad..4e7b82b 100644
+--- a/hailort/libhailort/bindings/python/src/CMakeLists.txt
++++ b/hailort/libhailort/bindings/python/src/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5.0)
+ project(pyhailort)
+ 
++set(CMAKE_VERBOSE_MAKEFILE ON)
++
+ find_program(CCACHE_PROGRAM ccache)
+ find_program(CLACHE_PROGRAM clcache)
+ 
+-- 
+2.55.0
+
