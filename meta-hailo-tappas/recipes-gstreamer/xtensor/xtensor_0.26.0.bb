@@ -1,7 +1,7 @@
 SUMMARY = "Xtensor : C++ library meant for numerical analysis with multi-dimensional array expressions"
 HOMEPAGE = "https://github.com/xtensor-stack/xtensor"
 
-SRCREV_xtensor = "825c0fd8a465049c06ad89fa3911b342dbffcabf"
+SRCREV_xtensor = "f31d415a507b84d0097436a38293df3f56906ad1"
 SRC_URI = "git://github.com/xtensor-stack/xtensor.git;name=xtensor;protocol=https;branch=master"
 
 LICENSE = "LICENSE"
