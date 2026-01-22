@@ -8,7 +8,10 @@ LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
 SRCREV = "70c2d5bf2ad31fa47e4c1dc06fd5574055ea8772"
 
-SRC_URI += "file://0001-Fix-build-with-newer-xtensor-versions.patch;patchdir=${S}/../.."
+SRC_URI += " \
+    file://0001-Fix-build-with-newer-xtensor-versions.patch;patchdir=${S}/../.. \
+    file://0002-Do-not-use-architecture-based-subdirs.patch;patchdir=${S}/../.. \
+"
 
 inherit hailotools-base
 
