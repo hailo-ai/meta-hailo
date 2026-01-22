@@ -31,9 +31,12 @@ EXTRA_OEMESON += " \
 do_install:append() {
     # Meson installs shared objects in apps target,
     # we remove it from the rootfs to prevent duplication with libgsthailotools
-    rm -rf ${D}/usr/lib/libhailo_tracker*
+    rm -rf ${D}${libdir}/libhailo_tracker*
     rm -rf ${D}/${libdir}/libhailo_opencv_utils*
     rm -rf ${D}/${libdir}/libgsthailometa*
+    # These are in libgsthailotools-dev
+    rm -rf ${D}${libdir}/pkgconfig
+    rm -rf ${D}${includedir}
 }
 
 FILES:${PN} += "${libdir}/hailo-post-processes/* ${ROOTFS_POST_PROCESSES_DIR}/* ${ROOTFS_POST_PROCESSES_DIR}/so.* \
