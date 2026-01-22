@@ -1,0 +1,65 @@
+From 6ad8d998e1390d3b424174037245bb0f2da5ebb3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Thu, 22 Jan 2026 16:46:21 +0100
+Subject: [PATCH 2/2] Do not use architecture based subdirs
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ core/hailo/apps/meson.build | 2 +-
+ core/hailo/meson.build      | 8 ++------
+ 2 files changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/core/hailo/apps/meson.build b/core/hailo/apps/meson.build
+index 3ac094b..f10bef1 100644
+--- a/core/hailo/apps/meson.build
++++ b/core/hailo/apps/meson.build
+@@ -2,7 +2,7 @@ apps_install_dir = get_option('apps_install_dir')
+ install_lpr = get_option('install_lpr')
+ if apps_install_dir == ''
+   # By default install for x86 workspace
+-  apps_install_dir = '/usr/lib/' + arch_dir + 'hailo/tappas/apps'
++  apps_install_dir = '/usr/lib/' + 'hailo/tappas/apps'
+ endif
+ 
+ thread_deps = [dependency('threads')]
+diff --git a/core/hailo/meson.build b/core/hailo/meson.build
+index 559e170..d766bce 100644
+--- a/core/hailo/meson.build
++++ b/core/hailo/meson.build
+@@ -78,15 +78,11 @@ post_deps = []
+ hailo_lib_args = get_option('libargs')
+ target_platform = get_option('target_platform')
+ arch = host_machine.cpu_family()
+-arch_dir = arch + '-linux-gnu/'
+-
+ 
+ if target_platform in ['x86', 'x86_64']
+   arch = 'x86_64'
+ elif target_platform in ['rpi', 'rpi5', 'rockchip', 'aarch64']
+   arch = 'aarch64'
+-elif target_platform == 'imx8'
+-  arch_dir = ''
+ else
+   error('Unknown target platform: ' + target_platform)  
+ endif
+@@ -94,10 +90,10 @@ endif
+ post_proc_install_dir = get_option('post_processes_install_dir')
+ if post_proc_install_dir == ''
+   # By default install for x86 workspace
+-  post_proc_install_dir = '/usr/lib/' + arch_dir + 'hailo/tappas/post_processes'
++  post_proc_install_dir = '/usr/lib/' + 'hailo/tappas/post_processes'
+ endif
+ 
+-install_dir = '/usr/lib/' + arch_dir
++install_dir = '/usr/lib/'
+ 
+ target = get_option('target')
+ # Project Subdirectories
+-- 
+2.52.0
+
