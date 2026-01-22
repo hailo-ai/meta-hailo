@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff 
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
-SRCREV = "459eaf02343079aa417596cee7daeab3648701ea"
+SRCREV = "41a720b9fedb56a4ee9ea39506afecf3f9ace2eb"
 
 SRC_URI[tokenizers_cpp.sha256sum] = "5fa87d0425174667127488dc128b27e11ada4edb1d205b1ffa8bed44b9c9fed0"
 
