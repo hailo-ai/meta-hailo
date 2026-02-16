@@ -6,18 +6,18 @@ BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo10H/${PV}/FW"
 FW = "hailo10h_fw.tar.gz"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=b00759f6e47782da664511ef3b6553df \
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=e6a060ea62ccdb9f377b54a777a19a8f \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
 LICENSE = "LICENSE"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
-FW_PATH = "${WORKDIR}/${FW}"
+FW_PATH = "${DL_DIR}/${FW}"
 
 do_install() {
 	# Extract firmware (hailo10_fw.tar.gz) into the rootfs under /lib/firmware/hailo/hailo10h
 	install -d ${D}/lib/firmware/hailo/hailo10h
-	tar -xzf ${FW_PATH} -C ${D}/lib/firmware/hailo/hailo10h
+	tar --no-same-owner --no-same-permissions -xzf ${FW_PATH} -C ${D}/lib/firmware/hailo/hailo10h
 }
 
 FILES:${PN} += "/lib /lib/* /lib/firmware/hailo/hailo10h/*"
