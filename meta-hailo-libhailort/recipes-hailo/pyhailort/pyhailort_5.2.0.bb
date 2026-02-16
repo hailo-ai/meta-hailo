@@ -28,6 +28,8 @@ do_compile:prepend() {
     export PYTHON_INCLUDE_DIRS=${STAGING_INCDIR}/python${PYTHON_BASEVERSION}
     # define the toolchain file
     export CMAKE_TOOLCHAIN_FILE=${WORKDIR}/toolchain.cmake
+    # force CMake to use the native python wrapper to avoid sysconfig import errors
+    export PYTHON_EXECUTABLE="${STAGING_BINDIR_NATIVE}/python3-native/python3"
 }
 
 # prevents the following error:
