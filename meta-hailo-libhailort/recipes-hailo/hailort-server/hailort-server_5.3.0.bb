@@ -3,11 +3,11 @@ DESCRIPTION = "hailort server - hailort server provides a client-server rpc mech
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=c858d970eda804f02813be8e047fa07d"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=eb78bffb175a3f2be317bb4c45fedecf"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master-v5.3.0 \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
-SRCREV = "41a720b9fedb56a4ee9ea39506afecf3f9ace2eb"
+SRCREV = "3ad6b763a9ad671a90bc8b167872605378558f97"
 
 SRC_URI[tokenizers_cpp.sha256sum] = "5fa87d0425174667127488dc128b27e11ada4edb1d205b1ffa8bed44b9c9fed0"
 
@@ -18,6 +18,7 @@ inherit hailort-base
 inherit ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', '', d)}
 
 RDEPENDS:${PN} += "libhailort bash"
+DEPENDS += "libaio"
 
 SYSVINIT_PRIO = "20"
 SYSVINIT_PRIO:hailo10-usb-dongle = "60"
@@ -32,7 +33,9 @@ OECMAKE_TARGET_COMPILE = "hailort_server"
 
 HAILO_SERVER_ADDRESS = "unix-socket"
 HAILO_SERVER_ADDRESS:vpu = "unix-socket"
-HAILO_SERVER_ADDRESS:accelerator = "${@'0.0.0.0' if d.getVar('MACHINE') == 'hailo15-sbc-gen-ai' else ''}"
+HAILO_SERVER_ADDRESS:accelerator = ""
+HAILO_SERVER_ADDRESS:accelerator:hailo15-sbc-gen-ai = "0.0.0.0"
+HAILO_SERVER_ADDRESS:accelerator:hailo10-usb-dongle = "usb"
 
 do_install:append() {
   # Create /etc/default/hailort_server and append HAILO_SERVER_ADDRESS env var.
@@ -56,9 +59,12 @@ do_install:append() {
     install -d ${etcdir}/init.d
     install -d ${etcdir}/rc5.d
     install -m 0755 -D  ${S}/hailort/hailort_server/hailort_server.sh ${etcdir}/init.d
+    install -m 0755 -D  ${S}/hailort/hailort_server/usb/hailort_usb_setup.sh ${D}${bindir}/
+    install -m 0755 -D  ${S}/hailort/hailort_server/usb/hailort_usb_flicker.sh ${D}${bindir}/
     ln -s -r ${etcdir}/init.d/hailort_server.sh ${etcdir}/rc5.d/S${SYSVINIT_PRIO}hailort_server.sh
   fi
 }
 
 FILES:${PN} += "${bindir}/hailort_server"
 FILES:${PN} += "${@'${sysconfdir}/default/hailort_server' if d.getVar('HAILO_SERVER_ADDRESS') else ''}"
+FILES:${PN} += "${@'${bindir}/hailort_usb_setup.sh' if d.getVar('MACHINE') == 'hailo10-usb-dongle' else ''}"

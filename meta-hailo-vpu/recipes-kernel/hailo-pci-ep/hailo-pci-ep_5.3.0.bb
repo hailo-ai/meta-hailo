@@ -3,11 +3,11 @@ DESCRIPTION = "hailo pci ep driver \
                the recipe calls the compilation process with the proper cross-compiler and kernel directory. \
                the output of the compilation (hailo_pci_ep.ko) is copied to the target's rootfs"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "8762100214fa5f199de610733ad262a19d22c801"
+SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master-v5.3.0"
+SRCREV = "51ff77e3955d7e7f46b230e410568c6121c7c483"
 
 inherit module
 

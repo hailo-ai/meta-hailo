@@ -2,13 +2,13 @@ DESCRIPTION = "gsthailo GStreamer plugin \
                compiles the hailo gstreamer plugin including hailonet \
                the output of the compilation (libgsthailo.so) is copied to the target's rootfs under usr/lib/gstreamer-1.0 (gstreamer's plugins directory)"
 
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=c858d970eda804f02813be8e047fa07d \
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=eb78bffb175a3f2be317bb4c45fedecf \
                     file://hailort/libhailort/bindings/gstreamer/LICENSE;md5=4b54a1fd55a448865a0b32d41598759d"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "41a720b9fedb56a4ee9ea39506afecf3f9ace2eb"
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master-v5.3.0"
+SRCREV = "3ad6b763a9ad671a90bc8b167872605378558f97"
 
 S = "${WORKDIR}/git"
 
