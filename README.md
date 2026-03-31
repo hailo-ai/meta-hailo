@@ -5,14 +5,12 @@
 
 # Meta-Hailo #
 
-> **Note:** This release is for Hailo-1X devices only, for Hailo-8 devices please use versions released in hailo-8 branches (e.g. hailo8-kirkstone).
-
-Hailo's Yocto layers allow the user to integrate Hailo's software into an existing Yocto environment. They include recipes
+Hailo’s Yocto layers allow the user to integrate Hailo’s software into an existing Yocto environment. They include recipes
 for:
 - [**HailoRT library**](https://github.com/hailo-ai/hailort)
 - [**HailoRT drivers**](https://github.com/hailo-ai/hailort-drivers)
 - Firmware for Hailo devices
-    - Hailo-10
+    - Hailo-8
     - Hailo-15
 - pyHailoRT - HailoRT Python API (wraps the run-time library)
 - HailoRT GStreamer library implementing the HailoNet element

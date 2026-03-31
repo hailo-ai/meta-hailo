@@ -30,10 +30,15 @@ RDEPENDS:${PN}-pci-server = "${PCI_SERVER_PACKAGES}"
 RDEPENDS:${PN}-pci-server-dev-pkg = "\
     ${PN}-pci-server"
 
+GEN_AI_DEV_PACKAGES = "\
+    python3 \
+    python3-numpy \
+    pyhailort \
+    "
 RDEPENDS:${PN}-gen-ai:accelerator = ""
 RDEPENDS:${PN}-gen-ai-dev-pkg:accelerator = "\
     ${PN}-gen-ai \
-    "
+    ${GEN_AI_DEV_PACKAGES}"
 
 def get_hrt_features(d):
     # Build features support DISTRO_FEATURES
