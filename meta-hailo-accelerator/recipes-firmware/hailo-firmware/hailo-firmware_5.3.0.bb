@@ -18,7 +18,7 @@ FW_PATH = "${WORKDIR}/${FW}"
 do_install() {
 	# Extract firmware (hailo10_fw.tar.gz) into the rootfs under ${nonarch_base_libdir}/firmware/hailo/hailo10h
 	install -d ${D}${nonarch_base_libdir}/firmware/hailo/hailo10h
-	tar -xzf ${FW_PATH} -C ${D}${nonarch_base_libdir}/firmware/hailo/hailo10h
+	tar --no-same-owner -xzf ${FW_PATH} -C ${D}${nonarch_base_libdir}/firmware/hailo/hailo10h
 }
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/hailo/hailo10h/*"
