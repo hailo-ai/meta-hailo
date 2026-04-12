@@ -10,7 +10,7 @@ LICENSE_FILE = "LICENSE"
 SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};unpack=0;md5sum=a6eb960bb021ce965a43c2cf2aa7041a \
 		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
-LICENSE = "LICENSE"
+LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
 FW_PATH = "${WORKDIR}/${FW}"
