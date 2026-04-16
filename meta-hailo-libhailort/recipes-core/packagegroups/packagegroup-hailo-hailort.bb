@@ -13,6 +13,7 @@ RDEPENDS:${PN}-base = "\
     hailort-server \
     hailortcli \
     libhailort \
+    libhailopp \
     "
 RDEPENDS:${PN}-base-dev-pkg = "\
     ${PN}-base \
