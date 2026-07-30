@@ -1,0 +1,50 @@
+From dbe2d66f0548661b910e39642e4480b4ad0ad5e0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Wed, 7 Jan 2026 13:36:02 +0100
+Subject: [PATCH 1/2] Install headers when using cmake the same way as with
+ autotools
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ CMakeLists.txt | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fad4d56..388d005 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,9 +16,25 @@ set(FILES
+     "lib/Util.cpp"
+ )
+ 
++set(HEADERS
++    "lib/Attribute.h"
++    "lib/AttributeSet.h"
++    "lib/Cluster.h"
++    "lib/DotWriter.h"
++    "lib/Edge.h"
++    "lib/Enums.h"
++    "lib/Graph.h"
++    "lib/Idable.h"
++    "lib/IdManager.h"
++    "lib/Node.h"
++    "lib/RootGraph.h"
++    "lib/Subgraph.h"
++    "lib/Util.h"
++)
++
+ add_library(${PROJECT_NAME} STATIC ${FILES})
+ set_target_properties(${PROJECT_NAME} PROPERTIES
+-    PUBLIC_HEADER "lib/DotWriter.h"
++    PUBLIC_HEADER "${HEADERS}"
+     OUTPUT_NAME "dotwriter"
+     CXX_STANDARD              14
+     CXX_STANDARD_REQUIRED     YES
+-- 
+2.52.0
+

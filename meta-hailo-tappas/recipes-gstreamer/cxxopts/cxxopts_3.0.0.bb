@@ -8,8 +8,6 @@ SRC_URI = "git://github.com/jarro2783/cxxopts.git;protocol=https;branch=master"
 PV = "1.0+git${SRCPV}"
 SRCREV = "c74846a891b3cc3bfa992d588b1295f528d43039"
 
-S = "${WORKDIR}/git"
-
 do_install(){
     install -d ${D}${includedir}/cxxopts
     cp -r ${S}/include/* ${D}${includedir}/cxxopts

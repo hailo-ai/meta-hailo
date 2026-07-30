@@ -1,0 +1,33 @@
+From 28d21ba1676409f9dc8a6e64c9a7c549739a15f2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Wed, 7 Jan 2026 14:34:44 +0100
+Subject: [PATCH 2/2] Build shared library
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 388d005..1a1205c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -32,8 +32,9 @@ set(HEADERS
+     "lib/Util.h"
+ )
+ 
+-add_library(${PROJECT_NAME} STATIC ${FILES})
++add_library(${PROJECT_NAME} SHARED ${FILES})
+ set_target_properties(${PROJECT_NAME} PROPERTIES
++    SOVERSION "1.0"
+     PUBLIC_HEADER "${HEADERS}"
+     OUTPUT_NAME "dotwriter"
+     CXX_STANDARD              14
+-- 
+2.52.0
+

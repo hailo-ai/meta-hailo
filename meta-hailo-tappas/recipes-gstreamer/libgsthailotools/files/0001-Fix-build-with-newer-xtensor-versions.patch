@@ -1,0 +1,604 @@
+From 43236332e9b3209dd1859f1aa04d45fc1ba8f776 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Tue, 28 Jul 2026 11:19:16 +0200
+Subject: [PATCH] Fix build with newer xtensor versions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+xtensor moved headers into subdirectories.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ core/hailo/general/hailo_xtensor.hpp          |  6 ++--
+ core/hailo/general/opencv_utils.cpp           |  6 ++--
+ .../classification/classification.cpp         |  4 +--
+ .../classification/face_attributes.cpp        |  4 +--
+ .../classification/person_attributes.cpp      |  4 +--
+ core/hailo/libs/postprocesses/common/math.hpp | 12 +++----
+ .../libs/postprocesses/common/tensors.hpp     |  4 +--
+ .../depth_estimation/depth_estimation.cpp     |  4 +--
+ .../detection/face_detection.cpp              | 34 +++++++++----------
+ .../detection/face_detection.hpp              |  2 +-
+ .../libs/postprocesses/detection/nanodet.cpp  | 12 +++----
+ .../libs/postprocesses/detection/scrfd.cpp    |  8 ++---
+ .../libs/postprocesses/detection/scrfd.hpp    |  2 +-
+ .../instance_segmentation/mask_decoding.hpp   |  4 +--
+ .../instance_segmentation/yolov5seg.cpp       |  4 +--
+ .../instance_segmentation/yolov5seg.hpp       |  4 +--
+ .../postprocesses/ocr/ocr_postprocess.cpp     |  6 ++--
+ .../pose_estimation/centerpose.cpp            | 32 ++++++++---------
+ .../postprocesses/pose_estimation/mspn.cpp    | 12 +++----
+ .../yolov8pose_postprocess.cpp                | 32 ++++++++---------
+ .../yolov8pose_postprocess.hpp                |  4 +--
+ .../postprocesses/recognition/arcface.cpp     |  4 +--
+ .../libs/postprocesses/recognition/repvgg.cpp |  4 +--
+ core/hailo/libs/tools/debug.cpp               |  6 ++--
+ core/hailo/plugins/gallery/gallery.hpp        |  8 ++---
+ .../tracking/jde_tracker/kalman_filter.hpp    | 10 +++---
+ core/hailo/tracking/jde_tracker/strack.hpp    |  8 ++---
+ .../tracking/jde_tracker/tracker_macros.hpp   |  6 ++--
+ 28 files changed, 123 insertions(+), 123 deletions(-)
+
+diff --git a/core/hailo/general/hailo_xtensor.hpp b/core/hailo/general/hailo_xtensor.hpp
+index c912b75..8162c4a 100644
+--- a/core/hailo/general/hailo_xtensor.hpp
++++ b/core/hailo/general/hailo_xtensor.hpp
+@@ -5,9 +5,9 @@
+ #pragma once
+ 
+ #include "hailo_objects.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xview.hpp"
+-#include "xtensor/xnpy.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/views/xview.hpp"
++#include "xtensor/io/xnpy.hpp"
+ #include <string>
+ 
+ namespace hailo_common
+diff --git a/core/hailo/general/opencv_utils.cpp b/core/hailo/general/opencv_utils.cpp
+index 3b1bffe..718e1e7 100644
+--- a/core/hailo/general/opencv_utils.cpp
++++ b/core/hailo/general/opencv_utils.cpp
+@@ -1,7 +1,7 @@
+ #include <opencv2/opencv.hpp>
+-#include <xtensor/xarray.hpp>
+-#include <xtensor/xview.hpp>
+-#include <xtensor/xadapt.hpp>
++#include <xtensor/containers/xarray.hpp>
++#include <xtensor/views/xview.hpp>
++#include <xtensor/containers/xadapt.hpp>
+ #include "opencv_utils.hpp"
+ #include "hailomat_internal.hpp"
+ #include <vector>
+diff --git a/core/hailo/libs/postprocesses/classification/classification.cpp b/core/hailo/libs/postprocesses/classification/classification.cpp
+index 79e7f2b..0287950 100644
+--- a/core/hailo/libs/postprocesses/classification/classification.cpp
++++ b/core/hailo/libs/postprocesses/classification/classification.cpp
+@@ -8,8 +8,8 @@
+ #include "common/tensors.hpp"
+ #include "common/math.hpp"
+ #include "classification.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ #define RESNET_50_LAYER_NAME "resnet_v1_50/softmax1"
+ #define MOBILENET_V1_LAYER_NAME "mobilenet_v1/softmax1"
+diff --git a/core/hailo/libs/postprocesses/classification/face_attributes.cpp b/core/hailo/libs/postprocesses/classification/face_attributes.cpp
+index e54c526..2a78ab5 100644
+--- a/core/hailo/libs/postprocesses/classification/face_attributes.cpp
++++ b/core/hailo/libs/postprocesses/classification/face_attributes.cpp
+@@ -8,8 +8,8 @@
+ #include "common/math.hpp"
+ #include "face_attributes.hpp"
+ #include "hailo_tracker.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ #define RESNET_V1_18_FACE_OUTPUT_LAYER_NAME "face_attr_resnet_v1_18/fc3"
+ #define RESNET_V1_18_FACE_NUMBER_OF_CLASSES 40
+diff --git a/core/hailo/libs/postprocesses/classification/person_attributes.cpp b/core/hailo/libs/postprocesses/classification/person_attributes.cpp
+index 3ee3e00..27d0105 100644
+--- a/core/hailo/libs/postprocesses/classification/person_attributes.cpp
++++ b/core/hailo/libs/postprocesses/classification/person_attributes.cpp
+@@ -8,8 +8,8 @@
+ #include "common/math.hpp"
+ #include "hailo_tracker.hpp"
+ #include "person_attributes.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ using namespace common;
+ 
+diff --git a/core/hailo/libs/postprocesses/common/math.hpp b/core/hailo/libs/postprocesses/common/math.hpp
+index 99aed5b..b9aba2c 100644
+--- a/core/hailo/libs/postprocesses/common/math.hpp
++++ b/core/hailo/libs/postprocesses/common/math.hpp
+@@ -5,12 +5,12 @@
+ #ifndef _POSTPROCESSES_COMMON_MATH_HPP_
+ #define _POSTPROCESSES_COMMON_MATH_HPP_
+ 
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xeval.hpp"
+-#include "xtensor/xmath.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xview.hpp"
+-#include "xtensor/xio.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/core/xeval.hpp"
++#include "xtensor/core/xmath.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xview.hpp"
++#include "xtensor/io/xio.hpp"
+ 
+ namespace common
+ {
+diff --git a/core/hailo/libs/postprocesses/common/tensors.hpp b/core/hailo/libs/postprocesses/common/tensors.hpp
+index 291e40c..11949be 100644
+--- a/core/hailo/libs/postprocesses/common/tensors.hpp
++++ b/core/hailo/libs/postprocesses/common/tensors.hpp
+@@ -6,8 +6,8 @@
+ #define _POSTPROCESSES_COMMON_TENSORS_HPP_
+ 
+ #include "hailo_objects.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ namespace common
+ {
+diff --git a/core/hailo/libs/postprocesses/depth_estimation/depth_estimation.cpp b/core/hailo/libs/postprocesses/depth_estimation/depth_estimation.cpp
+index 8ac51e2..000ff50 100644
+--- a/core/hailo/libs/postprocesses/depth_estimation/depth_estimation.cpp
++++ b/core/hailo/libs/postprocesses/depth_estimation/depth_estimation.cpp
+@@ -5,8 +5,8 @@
+ #include "depth_estimation.hpp"
+ #include "common/tensors.hpp"
+ 
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ const char *output_layer_name = "fast_depth/conv20";
+ void fast_depth(HailoROIPtr roi)
+diff --git a/core/hailo/libs/postprocesses/detection/face_detection.cpp b/core/hailo/libs/postprocesses/detection/face_detection.cpp
+index 243fdaa..2008b00 100644
+--- a/core/hailo/libs/postprocesses/detection/face_detection.cpp
++++ b/core/hailo/libs/postprocesses/detection/face_detection.cpp
+@@ -14,23 +14,23 @@
+ #include "common/nms.hpp"
+ #include "json_config.hpp"
+ #include "face_detection.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xbuilder.hpp"
+-#include "xtensor/xcontainer.hpp"
+-#include "xtensor/xeval.hpp"
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xindex_view.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xmanipulation.hpp"
+-#include "xtensor/xmath.hpp"
+-#include "xtensor/xoperation.hpp"
+-#include "xtensor/xpad.hpp"
+-#include "xtensor/xrandom.hpp"
+-#include "xtensor/xshape.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xstrided_view.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/generators/xbuilder.hpp"
++#include "xtensor/containers/xcontainer.hpp"
++#include "xtensor/core/xeval.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/views/xindex_view.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/misc/xmanipulation.hpp"
++#include "xtensor/core/xmath.hpp"
++#include "xtensor/core/xoperation.hpp"
++#include "xtensor/misc/xpad.hpp"
++#include "xtensor/generators/xrandom.hpp"
++#include "xtensor/core/xshape.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xstrided_view.hpp"
++#include "xtensor/views/xview.hpp"
+ #include "hailo_xtensor.hpp"
+ #include "rapidjson/document.h"
+ #include "rapidjson/stringbuffer.h"
+diff --git a/core/hailo/libs/postprocesses/detection/face_detection.hpp b/core/hailo/libs/postprocesses/detection/face_detection.hpp
+index 1189555..11fcadb 100644
+--- a/core/hailo/libs/postprocesses/detection/face_detection.hpp
++++ b/core/hailo/libs/postprocesses/detection/face_detection.hpp
+@@ -5,7 +5,7 @@
+ #pragma once
+ #include "hailo_objects.hpp"
+ #include "hailo_common.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ class FaceDetectionParams
+ {
+diff --git a/core/hailo/libs/postprocesses/detection/nanodet.cpp b/core/hailo/libs/postprocesses/detection/nanodet.cpp
+index 8f17fe3..7874770 100644
+--- a/core/hailo/libs/postprocesses/detection/nanodet.cpp
++++ b/core/hailo/libs/postprocesses/detection/nanodet.cpp
+@@ -22,12 +22,12 @@
+ using namespace common;
+ 
+ // xtensor includes
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xview.hpp"
+ using namespace xt::placeholders;
+ 
+ #define SCORE_THRESHOLD 0.5f
+diff --git a/core/hailo/libs/postprocesses/detection/scrfd.cpp b/core/hailo/libs/postprocesses/detection/scrfd.cpp
+index b6a07e7..5138984 100644
+--- a/core/hailo/libs/postprocesses/detection/scrfd.cpp
++++ b/core/hailo/libs/postprocesses/detection/scrfd.cpp
+@@ -14,10 +14,10 @@
+ #include "common/nms.hpp"
+ #include "json_config.hpp"
+ #include "scrfd.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xpad.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/misc/xpad.hpp"
++#include "xtensor/views/xview.hpp"
+ #include "hailo_xtensor.hpp"
+ #include "rapidjson/document.h"
+ #include "rapidjson/stringbuffer.h"
+diff --git a/core/hailo/libs/postprocesses/detection/scrfd.hpp b/core/hailo/libs/postprocesses/detection/scrfd.hpp
+index f176775..ba197e8 100644
+--- a/core/hailo/libs/postprocesses/detection/scrfd.hpp
++++ b/core/hailo/libs/postprocesses/detection/scrfd.hpp
+@@ -5,7 +5,7 @@
+ #pragma once
+ #include "hailo_objects.hpp"
+ #include "hailo_common.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ class ScrfdParams
+ {
+diff --git a/core/hailo/libs/postprocesses/instance_segmentation/mask_decoding.hpp b/core/hailo/libs/postprocesses/instance_segmentation/mask_decoding.hpp
+index 4738dc9..07bab6b 100644
+--- a/core/hailo/libs/postprocesses/instance_segmentation/mask_decoding.hpp
++++ b/core/hailo/libs/postprocesses/instance_segmentation/mask_decoding.hpp
+@@ -2,7 +2,7 @@
+ #define _POSTPROCESSES_INSTANCE_SEGMENTATION_MASK_DECODING_HPP_
+ 
+ #include "common/math.hpp"
+-#include "xtensor/xadapt.hpp"
++#include "xtensor/containers/xadapt.hpp"
+ 
+ 
+ 
+@@ -81,7 +81,7 @@ void decode_masks(std::vector<HailoDetection> &objects, const xt::xarray<float>
+         // allocate and memcpy to a new memory so it points to the right data
+         std::vector<float> data(cropped_mask.shape(0) * cropped_mask.shape(1));
+         memcpy(data.data(), cropped_mask.data(), sizeof(float) * cropped_mask.shape(0) * cropped_mask.shape(1));
+-        
++
+         // Add the mask to the object meta
+         instance.add_object(std::make_shared<HailoConfClassMask>(std::move(data), cropped_mask.shape(0), cropped_mask.shape(1), 0.3, instance.get_class_id()));
+     }
+diff --git a/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.cpp b/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.cpp
+index 5d2e8b3..7c59ff5 100644
+--- a/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.cpp
++++ b/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.cpp
+@@ -1,6 +1,6 @@
+ #include "yolov5seg.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xpad.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/misc/xpad.hpp"
+ #include "hailo_common.hpp"
+ #include "common/math.hpp"
+ #include "common/tensors.hpp"
+diff --git a/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.hpp b/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.hpp
+index 6726e1f..8574e85 100644
+--- a/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.hpp
++++ b/core/hailo/libs/postprocesses/instance_segmentation/yolov5seg.hpp
+@@ -4,8 +4,8 @@
+  **/
+ #pragma once
+ #include "hailo_objects.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xio.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/io/xio.hpp"
+ 
+ __BEGIN_DECLS
+ class Yolov5segParams
+diff --git a/core/hailo/libs/postprocesses/ocr/ocr_postprocess.cpp b/core/hailo/libs/postprocesses/ocr/ocr_postprocess.cpp
+index 1224950..71d30b1 100644
+--- a/core/hailo/libs/postprocesses/ocr/ocr_postprocess.cpp
++++ b/core/hailo/libs/postprocesses/ocr/ocr_postprocess.cpp
+@@ -4,9 +4,9 @@
+  **/
+ #include <vector>
+ 
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xsort.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/misc/xsort.hpp"
+ #include "common/tensors.hpp"
+ #include "common/math.hpp"
+ #include "ocr_postprocess.hpp"
+diff --git a/core/hailo/libs/postprocesses/pose_estimation/centerpose.cpp b/core/hailo/libs/postprocesses/pose_estimation/centerpose.cpp
+index 6bc80a4..891c1c3 100644
+--- a/core/hailo/libs/postprocesses/pose_estimation/centerpose.cpp
++++ b/core/hailo/libs/postprocesses/pose_estimation/centerpose.cpp
+@@ -17,22 +17,22 @@
+ #include "common/math.hpp"
+ #include "common/nms.hpp"
+ 
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xcontainer.hpp"
+-#include "xtensor/xeval.hpp"
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xindex_view.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xmanipulation.hpp"
+-#include "xtensor/xmasked_view.hpp"
+-#include "xtensor/xoperation.hpp"
+-#include "xtensor/xpad.hpp"
+-#include "xtensor/xrandom.hpp"
+-#include "xtensor/xshape.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xstrided_view.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xcontainer.hpp"
++#include "xtensor/core/xeval.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/views/xindex_view.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/misc/xmanipulation.hpp"
++#include "xtensor/views/xmasked_view.hpp"
++#include "xtensor/core/xoperation.hpp"
++#include "xtensor/misc/xpad.hpp"
++#include "xtensor/generators/xrandom.hpp"
++#include "xtensor/core/xshape.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xstrided_view.hpp"
++#include "xtensor/views/xview.hpp"
+ 
+ //******************************************************************
+ // CENTERPOSE NETWORK SPECIFIC PARAMETERS
+diff --git a/core/hailo/libs/postprocesses/pose_estimation/mspn.cpp b/core/hailo/libs/postprocesses/pose_estimation/mspn.cpp
+index d54c31c..3afccc9 100644
+--- a/core/hailo/libs/postprocesses/pose_estimation/mspn.cpp
++++ b/core/hailo/libs/postprocesses/pose_estimation/mspn.cpp
+@@ -18,12 +18,12 @@
+ #include "rapidjson/filereadstream.h"
+ #include "rapidjson/schema.h"
+ 
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xoperation.hpp"
+-#include "xtensor/xpad.hpp"
+-#include "xtensor/xshape.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/core/xoperation.hpp"
++#include "xtensor/misc/xpad.hpp"
++#include "xtensor/core/xshape.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xview.hpp"
+ 
+ // MSPN NETWORK SPECIFIC PARAMETERS
+ #define SCORE_THRESHOLD 0.2
+diff --git a/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.cpp b/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.cpp
+index 312b7a3..3a6a4e3 100644
+--- a/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.cpp
++++ b/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.cpp
+@@ -14,22 +14,22 @@
+ #include "common/labels/coco_eighty.hpp"
+ #include "yolov8pose_postprocess.hpp"
+ 
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xcontainer.hpp"
+-#include "xtensor/xeval.hpp"
+-#include "xtensor/xtensor.hpp"
+-#include "xtensor/xindex_view.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xmanipulation.hpp"
+-#include "xtensor/xmasked_view.hpp"
+-#include "xtensor/xoperation.hpp"
+-#include "xtensor/xpad.hpp"
+-#include "xtensor/xrandom.hpp"
+-#include "xtensor/xshape.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xstrided_view.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xcontainer.hpp"
++#include "xtensor/core/xeval.hpp"
++#include "xtensor/containers/xtensor.hpp"
++#include "xtensor/views/xindex_view.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/misc/xmanipulation.hpp"
++#include "xtensor/views/xmasked_view.hpp"
++#include "xtensor/core/xoperation.hpp"
++#include "xtensor/misc/xpad.hpp"
++#include "xtensor/generators/xrandom.hpp"
++#include "xtensor/core/xshape.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/views/xstrided_view.hpp"
++#include "xtensor/views/xview.hpp"
+ 
+ using namespace xt::placeholders;
+ using namespace common;
+diff --git a/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.hpp b/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.hpp
+index 1650191..94ec373 100644
+--- a/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.hpp
++++ b/core/hailo/libs/postprocesses/pose_estimation/yolov8pose_postprocess.hpp
+@@ -6,8 +6,8 @@
+ #include "hailo_objects.hpp"
+ #include "hailo_common.hpp"
+ 
+-#include <xtensor/xview.hpp>
+-#include <xtensor/xsort.hpp>
++#include <xtensor/views/xview.hpp>
++#include <xtensor/misc/xsort.hpp>
+ 
+ struct KeyPt {
+     float xs;
+diff --git a/core/hailo/libs/postprocesses/recognition/arcface.cpp b/core/hailo/libs/postprocesses/recognition/arcface.cpp
+index ec90381..b35c5d2 100644
+--- a/core/hailo/libs/postprocesses/recognition/arcface.cpp
++++ b/core/hailo/libs/postprocesses/recognition/arcface.cpp
+@@ -8,8 +8,8 @@
+ #include "arcface.hpp"
+ #include "hailo_tracker.hpp"
+ #include "hailo_xtensor.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ #define OUTPUT_LAYER_NAME_RGB "arcface_mobilefacenet/fc1"
+ #define OUTPUT_LAYER_NAME_RGBA "arcface_mobilefacenet_rgbx/fc1"
+diff --git a/core/hailo/libs/postprocesses/recognition/repvgg.cpp b/core/hailo/libs/postprocesses/recognition/repvgg.cpp
+index 0a961d2..d9f97a3 100644
+--- a/core/hailo/libs/postprocesses/recognition/repvgg.cpp
++++ b/core/hailo/libs/postprocesses/recognition/repvgg.cpp
+@@ -8,8 +8,8 @@
+ #include "common/math.hpp"
+ #include "repvgg.hpp"
+ #include "hailo_xtensor.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
+ 
+ #define OUTPUT_LAYER_NAME "repvgg_a0_person_reid_2048/fc1"
+ 
+diff --git a/core/hailo/libs/tools/debug.cpp b/core/hailo/libs/tools/debug.cpp
+index 077c56b..b1fc44f 100644
+--- a/core/hailo/libs/tools/debug.cpp
++++ b/core/hailo/libs/tools/debug.cpp
+@@ -12,9 +12,9 @@
+ #include <random>
+ #include "debug.hpp"
+ 
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include <xtensor/xnpy.hpp>
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include <xtensor/io/xnpy.hpp>
+ 
+ // Frame counter A
+ int frame_count_a = 0;
+diff --git a/core/hailo/plugins/gallery/gallery.hpp b/core/hailo/plugins/gallery/gallery.hpp
+index 3ccf64c..b22db5f 100644
+--- a/core/hailo/plugins/gallery/gallery.hpp
++++ b/core/hailo/plugins/gallery/gallery.hpp
+@@ -8,10 +8,10 @@
+ #include <string>
+ #include <ostream>
+ #include <filesystem>
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xsort.hpp"
+-#include "xtensor/xio.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/misc/xsort.hpp"
++#include "xtensor/io/xio.hpp"
+ #include "hailo_objects.hpp"
+ #include "export/encode_json.hpp"
+ #include "import/decode_json.hpp"
+diff --git a/core/hailo/tracking/jde_tracker/kalman_filter.hpp b/core/hailo/tracking/jde_tracker/kalman_filter.hpp
+index d23bbfd..2db968c 100644
+--- a/core/hailo/tracking/jde_tracker/kalman_filter.hpp
++++ b/core/hailo/tracking/jde_tracker/kalman_filter.hpp
+@@ -32,11 +32,11 @@
+ #include "tracker_macros.hpp"
+ 
+ // Open source includes
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xmath.hpp"
+-#include "xtensor/xview.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/core/xmath.hpp"
++#include "xtensor/views/xview.hpp"
+ 
+ using namespace xt::placeholders;
+ 
+diff --git a/core/hailo/tracking/jde_tracker/strack.hpp b/core/hailo/tracking/jde_tracker/strack.hpp
+index 44c30a2..60764e3 100644
+--- a/core/hailo/tracking/jde_tracker/strack.hpp
++++ b/core/hailo/tracking/jde_tracker/strack.hpp
+@@ -27,10 +27,10 @@
+ #include "tracker_macros.hpp"
+ 
+ // Open source includes
+-#include "xtensor/xadapt.hpp"
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xio.hpp"
+-#include "xtensor/xmath.hpp"
++#include "xtensor/containers/xadapt.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/io/xio.hpp"
++#include "xtensor/core/xmath.hpp"
+ 
+ __BEGIN_DECLS
+ enum TrackState
+diff --git a/core/hailo/tracking/jde_tracker/tracker_macros.hpp b/core/hailo/tracking/jde_tracker/tracker_macros.hpp
+index 3518ab8..b4d8319 100644
+--- a/core/hailo/tracking/jde_tracker/tracker_macros.hpp
++++ b/core/hailo/tracking/jde_tracker/tracker_macros.hpp
+@@ -9,9 +9,9 @@
+ #pragma once
+ 
+ #include <utility>
+-#include "xtensor/xarray.hpp"
+-#include "xtensor/xfixed.hpp"
+-#include "xtensor/xtensor.hpp"
++#include "xtensor/containers/xarray.hpp"
++#include "xtensor/containers/xfixed.hpp"
++#include "xtensor/containers/xtensor.hpp"
+ 
+ namespace TrackerTypes
+ {
+-- 
+2.55.0
+

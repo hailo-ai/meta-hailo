@@ -1,0 +1,59 @@
+From fbbc526c4eedcaa030608ed458f557a79afca464 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Fri, 9 Jan 2026 10:13:25 +0100
+Subject: [PATCH 1/4] Use a pre-built pybind11 dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Silence policy warning for CMP0148.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/cmake/external/pybind11.cmake | 31 ++-------------------------
+ 1 file changed, 2 insertions(+), 29 deletions(-)
+
+diff --git a/hailort/cmake/external/pybind11.cmake b/hailort/cmake/external/pybind11.cmake
+index f7dfd47..c1bfa00 100644
+--- a/hailort/cmake/external/pybind11.cmake
++++ b/hailort/cmake/external/pybind11.cmake
+@@ -1,32 +1,5 @@
+ cmake_minimum_required(VERSION 3.11.0)
+ 
+-include(FetchContent)
++cmake_policy(SET CMP0148 NEW)
+ 
+-FetchContent_Declare(
+-    pybind11
+-    GIT_REPOSITORY https://github.com/pybind/pybind11.git
+-    GIT_TAG a2e59f0e7065404b44dfe92a28aca47ba1378dc4 # Version 2.13.6
+-    GIT_SHALLOW TRUE
+-    SOURCE_DIR ${HAILO_EXTERNAL_DIR}/pybind11-src
+-    SUBBUILD_DIR ${HAILO_EXTERNAL_DIR}/pybind11-subbuild
+-)
+-
+-# https://stackoverflow.com/questions/65527126/disable-install-for-fetchcontent
+-FetchContent_GetProperties(pybind11)
+-if(NOT pybind11_POPULATED)
+-    FetchContent_Populate(pybind11)
+-    if (NOT HAILO_EXTERNALS_EXCLUDE_TARGETS)
+-        if(NOT PYTHON_EXECUTABLE AND PYBIND11_PYTHON_VERSION)
+-            # venv version is prioritized (instead of PYBIND11_PYTHON_VERSION) if PYTHON_EXECUTABLE is not set.
+-            # See https://pybind11.readthedocs.io/en/stable/changelog.html#v2-6-0-oct-21-2020
+-            if((${CMAKE_VERSION} VERSION_LESS "3.22.0") AND (NOT WIN32))
+-                find_package(PythonInterp ${PYBIND11_PYTHON_VERSION} REQUIRED)
+-                set(PYTHON_EXECUTABLE ${Python_EXECUTABLE})
+-            else()
+-                find_package(Python3 ${PYBIND11_PYTHON_VERSION} REQUIRED EXACT COMPONENTS Interpreter Development)
+-                set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
+-            endif()
+-        endif()
+-        add_subdirectory(${pybind11_SOURCE_DIR} ${pybind11_BINARY_DIR} EXCLUDE_FROM_ALL)
+-    endif()
+-endif()
++find_package(pybind11 REQUIRED CONFIG)
+-- 
+2.55.0
+

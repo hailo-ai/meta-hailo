@@ -5,20 +5,30 @@ DESCRIPTION = "hailo firmware eth \
 BASE_URI = "https://hailo-hailort.s3.eu-west-2.amazonaws.com"
 FW_AWS_DIR = "Hailo8/${PV}/FW"
 FW = "hailo8_fw.${PV}_eth.bin"
+FW_DST = "hailo8_fw.bin"
 LICENSE_FILE = "LICENSE"
-SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};md5sum=991b6d22231fe7457ba96b7b00cc22c8 \
-		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
+SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};name=fw \
+		${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};name=lic"
+
+# 403 forbidden, so this firmware cannot be downloaded
+#SRC_URI[fw.sha256sum] = "???"
+SRC_URI[lic.sha256sum] = "ca96445e6e33ae0a82170ea847b0925c864492f0cbb6342d42c54fd647133608"
+
+inherit allarch
 
 LICENSE = "LICENSE"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
+LIC_FILES_CHKSUM = "file://${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
 
-FW_PATH = "${WORKDIR}/${FW}"
+S = "${UNPACKDIR}"
+
+FW_PATH = "${S}/${FW}"
+FW_DST_DIR = "${nonarch_base_libdir}/firmware/hailo"
+FW_DST_PATH = "${FW_DST_DIR}/${FW_DST}"
 
 do_install() {
-	# Stores hailo8_fw.bin in the rootfs under ${nonarch_base_libdir} - /usr/lib/firmware/hailo
-	install -d ${D}${nonarch_base_libdir}/firmware/hailo
-	install -m 0644 ${FW_PATH} ${D}${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin
+	install -d ${D}${FW_DST_DIR}
+	install -m 0644 ${FW_PATH} ${D}${FW_DST_PATH}
 }
 
 # Package contents
-FILES:${PN} += "${nonarch_base_libdir}/firmware/hailo/hailo8_fw.bin"
+FILES:${PN} += "${FW_DST_PATH}"

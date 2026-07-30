@@ -1,0 +1,154 @@
+From 28263980432c82cdbc6de4a3a43c283f5290fcc0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Thu, 8 Jan 2026 13:48:15 +0100
+Subject: [PATCH 13/18] Use a pre-built grpc dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Search for grpc using pkg-config, to avoid a cmake issue.
+
+Add the grpc++_unsecure library dependency using PkgConfig::grpc.
+
+Make HAILO_GRPC_CPP_PLUGIN_EXECUTABLE an option, so
+the build process can control this externally.
+Keep the default as it was before.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ hailort/cmake/external/grpc.cmake      | 48 ++------------------------
+ hailort/hailort_service/CMakeLists.txt |  2 +-
+ hailort/libhailort/src/CMakeLists.txt  |  3 +-
+ hailort/rpc/CMakeLists.txt             |  8 +++--
+ 4 files changed, 10 insertions(+), 51 deletions(-)
+
+diff --git a/hailort/cmake/external/grpc.cmake b/hailort/cmake/external/grpc.cmake
+index 9b98938..3a8a213 100644
+--- a/hailort/cmake/external/grpc.cmake
++++ b/hailort/cmake/external/grpc.cmake
+@@ -1,50 +1,6 @@
+ cmake_minimum_required(VERSION 3.11.0)
+ 
+ include(${CMAKE_CURRENT_LIST_DIR}/protobuf.cmake)
+-include(FetchContent)
+ 
+-FetchContent_Declare(
+-    grpc
+-    GIT_REPOSITORY  https://github.com/grpc/grpc
+-    GIT_TAG         6847e05dbb8088a918f06e2231a405942b5c002d # v1.54.0
+-    GIT_SHALLOW     TRUE
+-    SOURCE_DIR      ${HAILO_EXTERNAL_DIR}/grpc-src
+-    SUBBUILD_DIR    ${HAILO_EXTERNAL_DIR}/grpc-subbuild
+-)
+-
+-FetchContent_GetProperties(grpc)
+-if(NOT grpc_POPULATED)
+-    FetchContent_Populate(grpc)
+-    if (NOT HAILO_EXTERNALS_EXCLUDE_TARGETS)
+-        message(STATUS "Building grpc...")
+-        include(${CMAKE_CURRENT_LIST_DIR}/../execute_cmake.cmake)
+-        set(TOOL_BUILD_TYPE "Release")
+-        execute_cmake(
+-            SOURCE_DIR ${HAILO_EXTERNAL_DIR}/grpc-src
+-            BUILD_DIR ${HAILO_EXTERNAL_DIR}/grpc-build
+-            CONFIGURE_ARGS
+-                -DCMAKE_BUILD_TYPE=${TOOL_BUILD_TYPE}
+-        
+-                -DgRPC_BUILD_TESTS:BOOL=OFF
+-                # TODO: check flag on Windows
+-                # -DgRPC_BUILD_MSVC_MP_COUNT:STRING=-1
+-                -DgRPC_PROTOBUF_PROVIDER:STRING=package
+-                -DgRPC_PROTOBUF_PACKAGE_TYPE:STRING=CONFIG
+-                -DProtobuf_DIR:PATH=${PROTOBUF_CONFIG_DIR}
+-            BUILD_ARGS
+-                --config ${TOOL_BUILD_TYPE} --target grpc_cpp_plugin ${CMAKE_EXTRA_BUILD_ARGS}
+-            PARALLEL_BUILD
+-        )
+-        
+-        if(HAILO_BUILD_SERVICE)
+-            # TODO: go over BUILD_TESTING vs gRPC_BUILD_TESTS. what about avoiding the hack the same way we did for grpc_cpp_plugin?
+-            set(BUILD_TESTING OFF) # disabe abseil tests
+-            set(gRPC_ZLIB_PROVIDER "module" CACHE STRING "Provider of zlib library")
+-            # The following is an awful hack needed in order to force grpc to use our libprotobuf+liborotoc targets
+-            # ('formal' options are to let grpc recompile it which causes a name conflict,
+-            # or let it use find_package and take the risk it will use a different installed lib)
+-            set(gRPC_PROTOBUF_PROVIDER "hack" CACHE STRING "Provider of protobuf library")
+-            add_subdirectory(${grpc_SOURCE_DIR} ${grpc_BINARY_DIR} EXCLUDE_FROM_ALL)
+-        endif()
+-    endif()
+-endif()
+\ No newline at end of file
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(grpc REQUIRED IMPORTED_TARGET grpc++_unsecure)
+diff --git a/hailort/hailort_service/CMakeLists.txt b/hailort/hailort_service/CMakeLists.txt
+index 72f5d89..609f4e7 100644
+--- a/hailort/hailort_service/CMakeLists.txt
++++ b/hailort/hailort_service/CMakeLists.txt
+@@ -19,7 +19,7 @@ set_property(TARGET hailort_service PROPERTY CXX_STANDARD 17)
+ target_link_libraries(hailort_service
+     libhailort
+     hailort_common
+-    grpc++_unsecure
++    PkgConfig::grpc
+     hailort_rpc_grpc_proto
+ )
+ 
+diff --git a/hailort/libhailort/src/CMakeLists.txt b/hailort/libhailort/src/CMakeLists.txt
+index 7ea72aa..1a8fbee 100644
+--- a/hailort/libhailort/src/CMakeLists.txt
++++ b/hailort/libhailort/src/CMakeLists.txt
+@@ -6,6 +6,7 @@ include(GNUInstallDirs)
+ include(CMakePackageConfigHelpers)
+ include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/common_compiler_options.cmake)
+ include(${HAILO_EXTERNALS_CMAKE_SCRIPTS}/eigen.cmake)
++include(${HAILO_EXTERNALS_CMAKE_SCRIPTS}/grpc.cmake)
+ 
+ FUNCTION(relative_to_absolute_paths output)
+     SET(listVar "")
+@@ -91,7 +92,7 @@ target_link_libraries(libhailort PRIVATE Eigen3::Eigen)
+ target_link_libraries(libhailort PRIVATE rpc_proto)
+ 
+ if(HAILO_BUILD_SERVICE)
+-    target_link_libraries(libhailort PRIVATE grpc++_unsecure)
++    target_link_libraries(libhailort PRIVATE PkgConfig::grpc)
+     target_link_libraries(libhailort PRIVATE hailort_rpc_grpc_proto)
+ endif()
+ 
+diff --git a/hailort/rpc/CMakeLists.txt b/hailort/rpc/CMakeLists.txt
+index 790c4c0..b678c9b 100644
+--- a/hailort/rpc/CMakeLists.txt
++++ b/hailort/rpc/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/common_compiler_options.cmake)
++include(${HAILO_EXTERNALS_CMAKE_SCRIPTS}/grpc.cmake)
+ 
+ # Proto file
+ get_filename_component(hailort_rpc_proto "hailort_rpc.proto" ABSOLUTE)
+@@ -12,9 +13,9 @@ set(hailort_rpc_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/hailort_rpc.grpc.pb.h")
+ set(HAILO_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
+ if(HAILO_BUILD_SERVICE)
+     if(CMAKE_HOST_UNIX)
+-        set(HAILO_GRPC_CPP_PLUGIN_EXECUTABLE "${HAILO_EXTERNAL_DIR}/grpc-build/grpc_cpp_plugin")
++        option(HAILO_GRPC_CPP_PLUGIN_EXECUTABLE "Path to grpc_cpp_plugin" "${HAILO_EXTERNAL_DIR}/grpc-build/grpc_cpp_plugin")
+     else()
+-        set(HAILO_GRPC_CPP_PLUGIN_EXECUTABLE "${HAILO_EXTERNAL_DIR}/grpc-build/Release/grpc_cpp_plugin.exe")
++        option(HAILO_GRPC_CPP_PLUGIN_EXECUTABLE "Path to grpc_cpp_plugin" "${HAILO_EXTERNAL_DIR}/grpc-build/Release/grpc_cpp_plugin.exe")
+     endif()
+ endif()
+ 
+@@ -36,7 +37,8 @@ add_library(hailort_rpc_grpc_proto STATIC EXCLUDE_FROM_ALL
+     ${hailort_rpc_proto_hdrs})
+ 
+ set_target_properties(hailort_rpc_grpc_proto PROPERTIES POSITION_INDEPENDENT_CODE ON)
+-target_link_libraries(hailort_rpc_grpc_proto protobuf-lite grpc++_unsecure)
++target_link_libraries(hailort_rpc_grpc_proto protobuf-lite PkgConfig::grpc)
++
+ # Include generated *.pb.h files
+ target_include_directories(hailort_rpc_grpc_proto PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
+ disable_exceptions(hailort_rpc_grpc_proto)
+\ No newline at end of file
+-- 
+2.55.0
+
