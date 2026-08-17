@@ -1,12 +1,12 @@
 DESCRIPTION = "tappas-tracers GStreamer plugin \
                compiles the tappas libgsttracer gstreamer plugin \ 
                and copies it to usr/lib/gstreamer-1.0 (gstreamer's plugins directory) "
-               
-LICENSE = "LGPLv2.1"
+
+LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "70c2d5bf2ad31fa47e4c1dc06fd5574055ea8772"
+SRCREV = "5e1caa5ec3cbd5e3e31a9d3179bab0bb459c4acc"
 
 inherit hailotools-base
 
@@ -16,6 +16,7 @@ do_install:append() {
     rm -rf ${D}/usr/lib/libgsthailometa*
     rm -rf ${D}/usr/include/gsthailometa
     rm -rf ${D}/usr/lib/pkgconfig/gsthailometa.pc
+    rm -rf ${D}/${libdir}/libhailo_opencv_utils*
 
     rm -f ${D}/${libdir}/gstreamer-1.0/libgsthailotracers.so
     find ${D}/${libdir}/gstreamer-1.0/ -name 'libgsthailotracers.so.[0-9]' -delete

@@ -3,10 +3,10 @@ DESCRIPTION = "libhailort - hailo’s API for running inference on the hailo8 ch
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=eb78bffb175a3f2be317bb4c45fedecf"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=26d65d93a121dbee87637eb4a4be8376"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "d503417f2a0db186a838390fb08690c4ea0f415e"
+SRCREV = "f51959034a8a49b7ee53cd0034a161faa30352ba"
 
 S = "${WORKDIR}/git"
 
