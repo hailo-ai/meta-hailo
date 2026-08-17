@@ -20,7 +20,6 @@ TARGET_PLATFORM:hailo15 = "hailo15"
 EXTRA_OEMESON += " \
         -Dlibargs='-I${GST_HAILO_INCLUDE_DIR},-I${HAILO_INCLUDE_DIR}' \
         -Dlibxtensor='${STAGING_INCDIR}/xtensor' \
-        -Dinclude_blas=false \
         -Dtarget='${TAPPAS_BUILD_TARGET}' \
         -Dtarget_platform='${TARGET_PLATFORM}' \
         -Dcpp_std='c++17' \
