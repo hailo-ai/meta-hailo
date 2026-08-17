@@ -8,11 +8,11 @@ LICENSE_FILE = "LICENSE"
 SRC_URI = "${BASE_URI}/${FW_AWS_DIR}/${FW};name=fw_${HAILO_SOC_NAME} \
 		   ${BASE_URI}/${FW_AWS_DIR}/${LICENSE_FILE};md5sum=263ee034adc02556d59ab1ebdaea2cda"
 
-SRC_URI[fw_hailo15.sha256sum] = "7f729ac7023b281edc067794e9eceda938dfe67e6e3d2729c10dd5671337166c"
-SRC_URI[fw_hailo15l.sha256sum] = "a067d290db0c89fc4af1e1e9334c1ea9d0d96fcbd3d7cffba4c8f5c7e14acffe"
+SRC_URI[fw_hailo15.sha256sum] = "1a93394d828357e36d1ee7510710dd7e0acc5df6c7215b20c9941e8406e87dce"
+SRC_URI[fw_hailo15l.sha256sum] = "69c4773de18424059954747a2e5c15194d3f0ec236d5ea350658b32f53c134a8"
 
-LICENSE = "LICENSE"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/${LICENSE_FILE};md5=263ee034adc02556d59ab1ebdaea2cda"
+LICENSE = "Proprietary"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2ccdd50f62f8ac0b28"
 
 FW_PATH = "${WORKDIR}/${FW}"
 
