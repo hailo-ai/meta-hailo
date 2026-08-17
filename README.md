@@ -5,7 +5,7 @@
 
 # Meta-Hailo #
 
-> **Note:** This release is for Hailo-1X devices only, for Hailo-8 devices please use versions released in hailo-8 branches (e.g. hailo8-kirkstone).
+> **Note:** This release is for Hailo-10 devices only. For Hailo-8 devices, please use versions released in hailo-8 branches (e.g. hailo8-kirkstone).
 
 Hailo's Yocto layers allow the user to integrate Hailo's software into an existing Yocto environment. They include recipes
 for:
