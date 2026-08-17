@@ -3,7 +3,7 @@ DESCRIPTION = "hailort server - hailort server provides a client-server rpc mech
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff \
-                    file://hailort/LICENSE-3RD-PARTY.md;md5=6bb4065ba26c9cc3e0761bfefbd6fa27"
+                    file://hailort/LICENSE-3RD-PARTY.md;md5=26d65d93a121dbee87637eb4a4be8376"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/hailo-hailort/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"

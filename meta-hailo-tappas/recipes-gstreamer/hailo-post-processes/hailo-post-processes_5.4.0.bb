@@ -2,11 +2,11 @@ DESCRIPTION = "Tappas post processes \
                compiles the hailo post processes, including draw processes, cropping algorithms and various network postprocesses \
                and copies it to usr/lib/hailo-post-processes"
 
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "70c2d5bf2ad31fa47e4c1dc06fd5574055ea8772"
+SRCREV = "5e1caa5ec3cbd5e3e31a9d3179bab0bb459c4acc"
 
 inherit hailotools-base
 
@@ -30,6 +30,8 @@ do_install:append() {
     # Meson installs shared objects in apps target,
     # we remove it from the rootfs to prevent duplication with libgsthailotools
     rm -rf ${D}/usr/lib/libhailo_tracker*
+    rm -rf ${D}/${libdir}/libhailo_opencv_utils*
+    rm -rf ${D}/${libdir}/libgsthailometa*
 }
 
 FILES:${PN} += "${libdir}/hailo-post-processes/* ${ROOTFS_POST_PROCESSES_DIR}/* ${ROOTFS_POST_PROCESSES_DIR}/so.* \
