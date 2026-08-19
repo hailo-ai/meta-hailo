@@ -1,17 +1,17 @@
-DESCRIPTION = "Tappas post processes \
+DESCRIPTION = "Hailo-Apps Core post processes \
                compiles the hailo post processes, including draw processes, cropping algorithms and various network postprocesses \
                and copies it to usr/lib/hailo-post-processes"
 
 LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "5e1caa5ec3cbd5e3e31a9d3179bab0bb459c4acc"
+SRC_URI = "git://git@github.com/hailo-ai/hailo-apps-core.git;protocol=https;branch=master"
+SRCREV = "70c2d5bf2ad31fa47e4c1dc06fd5574055ea8772"
 
-inherit hailotools-base
+inherit hailo-apps-core-base
 
 # Setting meson build target
-TAPPAS_BUILD_TARGET = "libs"
+HAILO_APPS_CORE_BUILD_TARGET = "libs"
 ROOTFS_POST_PROCESSES_DIR = "${libdir}/hailo-post-processes"
 
 # add dependencies

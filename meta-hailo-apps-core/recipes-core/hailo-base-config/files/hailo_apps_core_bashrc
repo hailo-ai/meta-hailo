@@ -1,10 +1,10 @@
-export TAPPAS_WORKSPACE="$(realpath ~)"
+export HAILO_APPS_CORE_WORKSPACE="$(realpath ~)"
 
 function gst_set_debug() {
     # set gstreamer debug
     export GST_SHARK_LOCATION=/tmp/profile
     export GST_DEBUG="GST_TRACER:7,GST_PIPELINE:4"
-    export GST_DEBUG_FILE=$TAPPAS_WORKSPACE/tappas_traces.log
+    export GST_DEBUG_FILE=$HAILO_APPS_CORE_WORKSPACE/hailo_apps_core_traces.log
     export GST_DEBUG_NO_COLOR=1
 
     if [[ "$1" == "-r" ]]; then
@@ -64,7 +64,7 @@ function gst_prepare_tracers_dir() {
     # plot the gst-shark dump files
     export GST_SHARK_LOCATION=/tmp/profile
 
-    split_traces_dir=$TAPPAS_WORKSPACE/tappas_traces_$(date +%d_%m_%Y_%H_%M_%S)
+    split_traces_dir=$HAILO_APPS_CORE_WORKSPACE/hailo_apps_core_traces_$(date +%d_%m_%Y_%H_%M_%S)
     mkdir $split_traces_dir
 
     if ls -rt $GST_SHARK_LOCATION/graphic/pipeline* 1>/dev/null 2>&1; then

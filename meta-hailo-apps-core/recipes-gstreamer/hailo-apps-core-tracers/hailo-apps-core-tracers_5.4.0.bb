@@ -1,14 +1,14 @@
-DESCRIPTION = "tappas-tracers GStreamer plugin \
-               compiles the tappas libgsttracer gstreamer plugin \ 
+DESCRIPTION = "hailo-apps-core-tracers GStreamer plugin \
+               compiles the hailo-apps-core libgsttracer gstreamer plugin \
                and copies it to usr/lib/gstreamer-1.0 (gstreamer's plugins directory) "
 
 LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
-SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "5e1caa5ec3cbd5e3e31a9d3179bab0bb459c4acc"
+SRC_URI = "git://git@github.com/hailo-ai/hailo-apps-core.git;protocol=https;branch=master"
+SRCREV = "70c2d5bf2ad31fa47e4c1dc06fd5574055ea8772"
 
-inherit hailotools-base
+inherit hailo-apps-core-base
 
 do_install:append() {
     # Meson installs shared objects in apps target,
@@ -26,7 +26,7 @@ do_install:append() {
 
 DEPENDS += "glib-2.0-native glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base libgsthailotools procps"
 
-TAPPAS_BUILD_TARGET = "tracers"
+HAILO_APPS_CORE_BUILD_TARGET = "tracers"
 
 FILES:${PN} += "/usr/lib/gstreamer-1.0/libgsthailotracers.so /usr/lib/gstreamer-1.0/libgsthailotracers.so.${PV}"
 FILES:${PN}-lib += "/usr/lib/gstreamer-1.0/libgsthailotracers.so.${PV} /usr/lib/gstreamer-1.0/libgsthailotracers.so"

@@ -15,7 +15,7 @@ for:
     - Hailo-10
 - pyHailoRT - HailoRT Python API (wraps the run-time library)
 - HailoRT GStreamer library implementing the HailoNet element
-- Hailo [**TAPPAS**](https://github.com/hailo-ai/tappas) - framework for optimized execution of video-processing pipelines
+- [**Hailo-Apps Core**](https://github.com/hailo-ai/hailo-apps-core) - framework for optimized execution of video-processing pipelines
 
 ## Usage
 
