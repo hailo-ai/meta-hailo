@@ -7,12 +7,12 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=39bba7d2cf0ba1036f2a6e2be52fe3f0"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "b6dd17c609504e648eb516ff4a867167edf56f3c"
+SRCREV = "309eb102af12a7986a8d635723b52d33c96bf7b3"
 
 inherit module
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/git/linux/integrated_nnc"
 
 EXTRA_OEMAKE += "KERNEL_DIR=${STAGING_KERNEL_DIR}"
-MAKE_TARGETS = "integrated_nnc"
-MODULES_INSTALL_TARGET = "integrated_nnc install"
+MAKE_TARGETS = "all"
+MODULES_INSTALL_TARGET = "install"
