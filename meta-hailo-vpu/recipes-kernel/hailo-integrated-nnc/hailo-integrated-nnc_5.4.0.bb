@@ -13,6 +13,7 @@ inherit module
 
 S = "${WORKDIR}/git/linux/integrated_nnc"
 
-EXTRA_OEMAKE += "KERNEL_DIR=${STAGING_KERNEL_DIR}"
+# Public hailort-drivers keeps common/include at the repo root, so the Kbuild default points outside the repo
+EXTRA_OEMAKE += "KERNEL_DIR=${STAGING_KERNEL_DIR} COMMON_INCLUDE_DIRECTORY=../../common/include"
 MAKE_TARGETS = "all"
 MODULES_INSTALL_TARGET = "install"
