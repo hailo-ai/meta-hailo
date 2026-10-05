@@ -5,14 +5,16 @@ DESCRIPTION = "hailo integrated nnc driver \
 
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
+PR = "r1"
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort-drivers.git;protocol=https;branch=master"
-SRCREV = "b6dd17c609504e648eb516ff4a867167edf56f3c"
+SRCREV = "309eb102af12a7986a8d635723b52d33c96bf7b3"
 
 inherit module
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/git/linux/integrated_nnc"
 
-EXTRA_OEMAKE += "KERNEL_DIR=${STAGING_KERNEL_DIR}"
-MAKE_TARGETS = "integrated_nnc"
-MODULES_INSTALL_TARGET = "integrated_nnc install"
+# Public hailort-drivers keeps common/include at the repo root, so the Kbuild default points outside the repo
+EXTRA_OEMAKE += "KERNEL_DIR=${STAGING_KERNEL_DIR} COMMON_INCLUDE_DIRECTORY=../../common/include"
+MAKE_TARGETS = "all"
+MODULES_INSTALL_TARGET = "install"
