@@ -1,12 +1,12 @@
 DESCRIPTION = "gsthailotools GStreamer plugin \
-               compiles the tappas libgsthailotools gstreamer plugin \ 
+               compiles the tappas libgsthailotools gstreamer plugin \
                and copies it to usr/lib/gstreamer-1.0 (gstreamer's plugins directory) "
 
 LICENSE = "LGPL-2.1-or-later"
 LIC_FILES_CHKSUM += "file://../../LICENSE;md5=4fbd65380cdd255951079008b364516c"
 
 SRC_URI = "git://git@github.com/hailo-ai/tappas.git;protocol=https;branch=master"
-SRCREV = "5e1caa5ec3cbd5e3e31a9d3179bab0bb459c4acc"
+SRCREV = "474cd837f187ea6b0a22d359b736dbffc3df8b8c"
 
 inherit hailotools-base
 
