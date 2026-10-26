@@ -7,8 +7,8 @@ LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff 
                     file://hailort/LICENSE-3RD-PARTY.md;md5=26d65d93a121dbee87637eb4a4be8376 \
                     file://hailort/libhailort/bindings/gstreamer/LICENSE;md5=4b54a1fd55a448865a0b32d41598759d"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master"
-SRCREV = "f51959034a8a49b7ee53cd0034a161faa30352ba"
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master-v5.5.0"
+SRCREV = "9de77f972f7233559462ea64201bd9cfca6e2850"
 
 S = "${WORKDIR}/git"
 
