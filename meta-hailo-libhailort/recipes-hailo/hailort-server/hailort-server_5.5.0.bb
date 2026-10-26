@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://hailort/LICENSE;md5=800c77403398cedcbbbcd86d37f5e0ff 
 
 SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
-SRCREV = "5c346eddad1acc2d6b6a7cf661760279f63d274e"
+SRCREV = "f51959034a8a49b7ee53cd0034a161faa30352ba"
 
 SRC_URI[tokenizers_cpp.sha256sum] = "5fa87d0425174667127488dc128b27e11ada4edb1d205b1ffa8bed44b9c9fed0"
 
@@ -18,6 +18,7 @@ inherit hailort-base
 inherit ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', '', d)}
 
 RDEPENDS:${PN} += "libhailort bash"
+DEPENDS += "libaio"
 
 SYSTEMD_SERVICE:${PN} = "hailort_server.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
