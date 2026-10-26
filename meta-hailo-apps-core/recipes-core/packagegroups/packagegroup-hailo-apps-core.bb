@@ -1,4 +1,4 @@
-SUMMARY = "Hailo Tappas requirements"
+SUMMARY = "Hailo-Apps Core requirements"
 DESCRIPTION = "The minimal set of packages required to boot the system"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -7,8 +7,8 @@ inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 PACKAGES = "\
-            packagegroup-hailo-tappas \
-            packagegroup-hailo-tappas-dev-pkg"
+            packagegroup-hailo-apps-core \
+            packagegroup-hailo-apps-core-dev-pkg"
 
 RDEPENDS:${PN} = "\
     hailo-post-processes \
@@ -16,7 +16,7 @@ RDEPENDS:${PN} = "\
     libgsthailotools"
 
 RDEPENDS:${PN}-dev-pkg = "\
-    packagegroup-hailo-tappas \
-    tappas-tracers \
+    packagegroup-hailo-apps-core \
+    hailo-apps-core-tracers \
     opencv \
         "
