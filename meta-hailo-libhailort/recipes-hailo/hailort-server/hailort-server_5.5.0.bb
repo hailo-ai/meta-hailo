@@ -5,9 +5,9 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302 \
                     file://hailort/LICENSE-3RD-PARTY.md;md5=26d65d93a121dbee87637eb4a4be8376"
 
-SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master-v5.5.0 \
+SRC_URI = "git://git@github.com/hailo-ai/hailort.git;protocol=https;branch=master \
            https://hailo-hailort.s3.eu-west-2.amazonaws.com/CrossProducts/${PV}/tokenizers_cpp.tar.gz;name=tokenizers_cpp"
-SRCREV = "9de77f972f7233559462ea64201bd9cfca6e2850"
+SRCREV = "e7727f7482477e448f4c93b33dc62f9e5a30c3e7"
 
 SRC_URI[tokenizers_cpp.sha256sum] = "5fa87d0425174667127488dc128b27e11ada4edb1d205b1ffa8bed44b9c9fed0"
 
